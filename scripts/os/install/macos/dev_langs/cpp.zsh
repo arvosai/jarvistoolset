@@ -28,7 +28,14 @@ brew_install "Automake" "automake"
 brew_install "Libtool" "libtool"
 brew_install "pkg-config" "pkg-config"
 brew_install "GNU GDB" "gdb"
-brew_install "LLDB" "lldb"
+
+# Check if LLDB is already installed via Xcode
+if command -v lldb &> /dev/null; then
+    print_success "LLDB (via Xcode)"
+else
+    brew_install "LLDB" "lldb"
+fi
+
 brew_install "Valgrind" "valgrind"
 brew_install "Doxygen" "doxygen"
 brew_install "Cppcheck" "cppcheck"
