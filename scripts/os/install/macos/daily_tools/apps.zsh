@@ -77,13 +77,6 @@ brew_install "ripgrep" "ripgrep"
 # Install Mac App Store apps
 # Note: You need to be signed in to the Mac App Store for this to work
 
-# Xcode
-execute "mas install 497799835" \
-    "Install Xcode"
-
-# Install additional apps if needed
-# Add your own mas install commands here
-
 # Clean up
 execute "brew cleanup" \
     "Clean up Homebrew cache"

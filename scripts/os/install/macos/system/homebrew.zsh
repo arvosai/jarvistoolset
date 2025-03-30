@@ -65,7 +65,7 @@ install_homebrew() {
         fi
         
         # Update Homebrew
-        print_in_yellow "==> Updating Homebrew...\n"
+        #print_in_yellow "==> Updating Homebrew...\n"
         
         # Log the update
         if type log_info &>/dev/null; then

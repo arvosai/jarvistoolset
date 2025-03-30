@@ -3,14 +3,6 @@
 # Get the directory of the current script
 SCRIPT_DIR=${0:a:h}
 source "${SCRIPT_DIR}/../../../utils.zsh"
-source "${SCRIPT_DIR}/../../utils.zsh" 2>/dev/null || true  # Source local utils if available
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-
-cd "$(dirname "${BASH_SOURCE[0]}")" \
-    && source "../../utils.zsh" \
-    && source "./utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -245,33 +237,65 @@ EOL
 # Install the latest stable version of Ruby
 print_in_purple "\n   Installing Ruby\n\n"
 
+# Initialize rbenv
+if command -v rbenv 1>/dev/null 2>&1; then
+    eval "$(rbenv init -)"
+else
+    print_error "rbenv not found. Make sure it's installed correctly."
+    exit 1
+fi
+
+# Get the latest stable Ruby version
+latest_ruby_version=$(rbenv install -l | grep -v - | tail -1 | tr -d '[:space:]')
+
+if [[ -z "$latest_ruby_version" ]]; then
+    print_error "Failed to determine latest Ruby version"
+    exit 1
+fi
+
+print_info "Installing Ruby version $latest_ruby_version"
+
 # Install latest stable version of Ruby
-execute "rbenv install --skip-existing $(rbenv install -l | grep -v - | tail -1)" "Latest stable Ruby"
+if rbenv versions | grep -q "$latest_ruby_version"; then
+    print_success "Ruby $latest_ruby_version already installed"
+else
+    rbenv install --skip-existing "$latest_ruby_version" && print_success "Latest stable Ruby" || print_error "Failed to install Ruby $latest_ruby_version"
+fi
 
 # Set the installed version as global
-execute "rbenv global $(rbenv install -l | grep -v - | tail -1)" "Set Ruby version as global"
+rbenv global "$latest_ruby_version" && print_success "Set Ruby version as global" || print_error "Failed to set Ruby $latest_ruby_version as global"
+
+# Rehash to update shims
+rbenv rehash
 
 # Install common gems
 print_in_purple "\n   Installing Ruby Gems\n\n"
 
-# Reload rbenv
-eval "$(rbenv init -)"
+# Function to install a gem
+install_gem() {
+    local gem_name="$1"
+    local readable_name="${2:-$gem_name}"
+    
+    if gem list -i "^$gem_name$" > /dev/null; then
+        print_success "$readable_name (already installed)"
+    else
+        gem install "$gem_name" > /dev/null 2>&1 && print_success "$readable_name" || print_error "Failed to install $readable_name"
+    fi
+}
 
 # Update RubyGems
-execute "gem update --system" "Update RubyGems"
+gem update --system > /dev/null 2>&1 && print_success "Update RubyGems" || print_error "Failed to update RubyGems"
 
-# Install Bundler
-execute "gem install bundler" "Bundler"
-
-# Install common gems
-execute "gem install rails" "Rails"
-execute "gem install sinatra" "Sinatra"
-execute "gem install rspec" "RSpec"
-execute "gem install rubocop" "RuboCop"
-execute "gem install pry" "Pry"
-execute "gem install byebug" "Byebug"
-execute "gem install solargraph" "Solargraph"
-execute "gem install jekyll" "Jekyll"
+# Install gems
+install_gem "bundler" "Bundler"
+install_gem "rails" "Rails"
+install_gem "sinatra" "Sinatra"
+install_gem "rspec" "RSpec"
+install_gem "rubocop" "RuboCop"
+install_gem "pry" "Pry"
+install_gem "byebug" "Byebug"
+install_gem "solargraph" "Solargraph"
+install_gem "jekyll" "Jekyll"
 
 # Create modular configuration
 create_ruby_config

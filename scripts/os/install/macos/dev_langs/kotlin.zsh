@@ -3,14 +3,9 @@
 # Get the directory of the current script
 SCRIPT_DIR=${0:a:h}
 source "${SCRIPT_DIR}/../../../utils.zsh"
-source "${SCRIPT_DIR}/../../utils.zsh" 2>/dev/null || true  # Source local utils if available
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-
-cd "$(dirname "${BASH_SOURCE[0]}")" \
-    && source "../../utils.zsh" \
-    && source "./utils.zsh"
+# Add trap to handle broken pipe errors
+trap '' PIPE
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

@@ -525,9 +525,15 @@ fi
 
 # Source all other configuration files
 if [[ -d "$JARVIS_ZSH_CONFIGS" ]]; then
+  # First source Java configuration to ensure Java is available for other tools
+  if [[ -f "$JARVIS_ZSH_CONFIGS/java.zsh" ]]; then
+    source "$JARVIS_ZSH_CONFIGS/java.zsh"
+  fi
+  
+  # Then source all other configuration files
   for config_file in "$JARVIS_ZSH_CONFIGS"/*.zsh; do
-    # Skip exports.zsh as it's already sourced
-    if [[ "$config_file" != "$JARVIS_ZSH_CONFIGS/exports.zsh" ]]; then
+    # Skip exports.zsh and java.zsh as they're already sourced
+    if [[ "$config_file" != "$JARVIS_ZSH_CONFIGS/exports.zsh" && "$config_file" != "$JARVIS_ZSH_CONFIGS/java.zsh" ]]; then
       source "$config_file"
     fi
   done

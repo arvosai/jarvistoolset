@@ -3,14 +3,11 @@
 # Get the directory of the current script
 SCRIPT_DIR=${0:a:h}
 source "${SCRIPT_DIR}/../../../utils.zsh"
-source "${SCRIPT_DIR}/../../utils.zsh" 2>/dev/null || true  # Source local utils if available
+source "${SCRIPT_DIR}/../../../utils.zsh" 2>/dev/null || true  # Source local utils if available
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
-cd "$(dirname "${BASH_SOURCE[0]}")" \
-    && source "../../utils.zsh" \
-    && source "./utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -29,6 +26,11 @@ if [ ! -d "$HOME/.nvm" ]; then
     print_result $? "NVM installation"
 else
     print_success "NVM is already installed"
+    
+    # Ensure NVM is loaded even if it was already installed
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 fi
 
 # Create modular configuration file for Node.js
@@ -243,6 +245,22 @@ EOL
 
 # Install Node.js LTS version
 print_info "Installing Node.js LTS version..."
+
+# Ensure NVM is available in this script
+if ! command -v nvm &>/dev/null; then
+    print_warning "NVM command not found, attempting to load NVM again..."
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+    
+    # Check again if NVM is available
+    if ! command -v nvm &>/dev/null; then
+        print_error "Failed to load NVM. Please restart your terminal and try again."
+        exit 1
+    fi
+fi
+
+# Now use NVM to install and use Node.js
 nvm install --lts
 nvm use --lts
 print_result $? "Node.js LTS installation"
@@ -275,7 +293,8 @@ npm_install "npm-why" "npm-why"
 npm_install "npm-check" "npm-check"
 npm_install "depcheck" "Depcheck"
 npm_install "madge" "Madge"
-npm_install "npm-audit-fix-all" "npm-audit-fix-all"
+# npm_install "npm-audit-fix-all" "npm-audit-fix-all" - Package no longer exists in npm registry
+# Using npm's built-in audit fix capabilities instead (no package needed)
 
 # Create modular configuration
 create_node_config

@@ -306,7 +306,7 @@ fi
 
 # Log execution of setup script
 log_info "Executing setup script: $SETUP_SCRIPT"
-echo "Starting Jarvis Toolset setup..."
+# echo "Starting Jarvis Toolset setup..."
 
 # Call the setup script with the arguments
 "$SETUP_SCRIPT" "$HOSTNAME" "$USERNAME" "$EMAIL" "$DIRECTORY"

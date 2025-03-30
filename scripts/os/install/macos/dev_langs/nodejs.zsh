@@ -3,14 +3,7 @@
 # Get the directory of the current script
 SCRIPT_DIR=${0:a:h}
 source "${SCRIPT_DIR}/../../../utils.zsh"
-source "${SCRIPT_DIR}/../../utils.zsh" 2>/dev/null || true  # Source local utils if available
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-
-cd "$(dirname "${BASH_SOURCE[0]}")" \
-    && source "../../utils.zsh" \
-    && source "./utils.zsh"
+source "${SCRIPT_DIR}/../../../utils.zsh" 2>/dev/null || true  # Source local utils if available
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -27,6 +20,7 @@ install_nvm() {
         # Source NVM
         export NVM_DIR="$HOME/.nvm"
         [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+        [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
         
         print_result $? "NVM installation"
     else
@@ -35,6 +29,21 @@ install_nvm() {
         # Source NVM
         export NVM_DIR="$HOME/.nvm"
         [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+        [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+    fi
+    
+    # Ensure NVM is available in this script
+    if ! command -v nvm &>/dev/null; then
+        print_warning "NVM command not found, attempting to load NVM again..."
+        export NVM_DIR="$HOME/.nvm"
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+        [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+        
+        # Check again if NVM is available
+        if ! command -v nvm &>/dev/null; then
+            print_error "Failed to load NVM. Please restart your terminal and try again."
+            return 1
+        fi
     fi
 }
 
@@ -42,6 +51,7 @@ install_nvm() {
 install_nodejs() {
     # Install the LTS version of Node.js
     print_info "Installing Node.js LTS..."
+    
     nvm install --lts
     nvm use --lts
     nvm alias default node
@@ -53,13 +63,24 @@ install_nodejs() {
     npm --version
 }
 
+# Helper function to install npm packages
+npm_install() {
+    local PACKAGE_READABLE_NAME="$1"
+    local PACKAGE="$2"
+
+    if npm list -g "$PACKAGE" &> /dev/null; then
+        print_success "$PACKAGE_READABLE_NAME"
+    else
+        execute "npm install -g $PACKAGE" "$PACKAGE_READABLE_NAME"
+    fi
+}
+
 # Install global npm packages
 install_npm_packages() {
     print_in_purple "\n   Installing Global npm Packages\n\n"
     
     # Update npm
-    npm install -g npm@latest
-    print_result $? "npm update"
+    execute "npm install -g npm@latest" "npm update"
     
     # Install essential global packages
     npm_install "Yarn" "yarn"
@@ -72,6 +93,13 @@ install_npm_packages() {
     npm_install "http-server" "http-server"
     npm_install "npm-check-updates" "npm-check-updates"
     npm_install "serve" "serve"
+    npm_install "json-server" "json-server"
+    npm_install "npm-why" "npm-why"
+    npm_install "npm-check" "npm-check"
+    npm_install "depcheck" "depcheck"
+    npm_install "madge" "madge"
+    
+    # Framework CLIs
     npm_install "create-react-app" "create-react-app"
     npm_install "create-next-app" "create-next-app"
     npm_install "create-vite" "create-vite"
@@ -103,147 +131,128 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# Node.js aliases
-alias nvm-ls="nvm ls"
-alias nvm-lts="nvm install --lts"
-alias nvm-latest="nvm install node"
-alias npm-ls="npm list -g --depth=0"
-alias npm-update="npm update -g"
-alias npm-outdated="npm outdated -g"
-alias yarn-global="yarn global"
-alias pnpm-global="pnpm add -g"
+# Node.js version management aliases
+alias node-lts='nvm use --lts'
+alias node-latest='nvm use node'
+alias node-versions='nvm ls'
+alias node-install='nvm install'
+alias node-default='nvm alias default'
 
-# Node.js project creation functions
-new-node-project() {
-    if [ $# -lt 1 ]; then
-        echo "Usage: new-node-project <project-name> [--ts|--js]"
+# npm aliases
+alias ni='npm install'
+alias nid='npm install --save-dev'
+alias nig='npm install -g'
+alias nu='npm update'
+alias nug='npm update -g'
+alias nr='npm run'
+alias ns='npm start'
+alias nt='npm test'
+alias nb='npm run build'
+alias nd='npm run dev'
+alias nl='npm run lint'
+alias nf='npm run format'
+alias nci='npm ci'
+alias nout='npm outdated'
+alias nls='npm list --depth=0'
+alias nlsg='npm list -g --depth=0'
+alias naud='npm audit'
+alias naudf='npm audit fix'
+
+# yarn aliases
+alias yi='yarn install'
+alias ya='yarn add'
+alias yad='yarn add --dev'
+alias yag='yarn global add'
+alias yu='yarn upgrade'
+alias yug='yarn global upgrade'
+alias yr='yarn run'
+alias ys='yarn start'
+alias yt='yarn test'
+alias yb='yarn build'
+alias yd='yarn dev'
+alias yl='yarn lint'
+alias yf='yarn format'
+alias yout='yarn outdated'
+alias yls='yarn list --depth=0'
+alias ylsg='yarn global list'
+alias yaud='yarn audit'
+
+# pnpm aliases
+alias pi='pnpm install'
+alias pa='pnpm add'
+alias pad='pnpm add -D'
+alias pag='pnpm add -g'
+alias pu='pnpm update'
+alias pug='pnpm update -g'
+alias pr='pnpm run'
+alias ps='pnpm start'
+alias pt='pnpm test'
+alias pb='pnpm run build'
+alias pd='pnpm run dev'
+alias pl='pnpm run lint'
+alias pf='pnpm run format'
+alias pout='pnpm outdated'
+alias pls='pnpm list --depth=0'
+alias plsg='pnpm list -g --depth=0'
+alias paud='pnpm audit'
+
+# Node.js project utilities
+create-node-project() {
+    local project_name=$1
+    local template=${2:-"basic"}
+    
+    if [ -z "$project_name" ]; then
+        echo "Error: Project name is required."
+        echo "Usage: create-node-project <project-name> [template]"
+        echo "Available templates: basic, express, typescript, ts-express"
         return 1
     fi
     
-    local project_name=$1
-    local project_type=${2:-"--js"}
-    
-    # Create project directory
     mkdir -p "$project_name"
     cd "$project_name" || return
     
-    # Initialize npm project
-    npm init -y
-    
-    # Create basic project structure
-    mkdir -p src
-    mkdir -p test
-    
-    if [[ "$project_type" == "--ts" ]]; then
-        # TypeScript project
-        npm install --save-dev typescript ts-node @types/node jest ts-jest @types/jest
-        
-        # Create tsconfig.json
-        cat > "tsconfig.json" << EOF
-{
-  "compilerOptions": {
-    "target": "es2020",
-    "module": "commonjs",
-    "lib": ["es2020"],
-    "declaration": true,
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
-  },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "**/*.test.ts"]
-}
+    case "$template" in
+        "basic")
+            # Initialize npm
+            npm init -y
+            
+            # Create basic structure
+            mkdir -p src
+            touch src/index.js
+            
+            # Add start script
+            sed -i '' 's/"test": "echo \\"Error: no test specified\\" && exit 1"/"test": "echo \\"Error: no test specified\\" && exit 1",\n    "start": "node src\/index.js"/' package.json
+            
+            # Create basic index.js
+            cat > src/index.js << 'EOF'
+console.log('Hello, Node.js!');
 EOF
-        
-        # Create index.ts
-        cat > "src/index.ts" << EOF
-/**
- * Main entry point for the application
- */
-export function greet(name: string): string {
-  return \`Hello, \${name}!\`;
-}
+            
+            # Create README
+            cat > README.md << 'EOF'
+# Node.js Project
 
-// Run if this file is executed directly
-if (require.main === module) {
-  console.log(greet('World'));
-}
+A basic Node.js project.
+
+## Getting Started
+
+1. Install dependencies: `npm install`
+2. Run the project: `npm start`
 EOF
-        
-        # Create test file
-        cat > "test/index.test.ts" << EOF
-import { greet } from '../src/index';
-
-describe('greet', () => {
-  it('should return a greeting message', () => {
-    expect(greet('Test')).toBe('Hello, Test!');
-  });
-});
-EOF
-        
-        # Update package.json scripts
-        npm pkg set scripts.build="tsc"
-        npm pkg set scripts.start="node dist/index.js"
-        npm pkg set scripts.dev="ts-node src/index.ts"
-        npm pkg set scripts.test="jest"
-        npm pkg set scripts.lint="eslint src --ext .ts"
-        
-    else
-        # JavaScript project
-        npm install --save-dev jest
-        
-        # Create index.js
-        cat > "src/index.js" << EOF
-/**
- * Main entry point for the application
- */
-function greet(name) {
-  return \`Hello, \${name}!\`;
-}
-
-// Export for use in other files
-module.exports = { greet };
-
-// Run if this file is executed directly
-if (require.main === module) {
-  console.log(greet('World'));
-}
-EOF
-        
-        # Create test file
-        cat > "test/index.test.js" << EOF
-const { greet } = require('../src/index');
-
-describe('greet', () => {
-  it('should return a greeting message', () => {
-    expect(greet('Test')).toBe('Hello, Test!');
-  });
-});
-EOF
-        
-        # Update package.json scripts
-        npm pkg set scripts.start="node src/index.js"
-        npm pkg set scripts.test="jest"
-    fi
-    
-    # Create .gitignore
-    cat > ".gitignore" << EOF
+            
+            # Create .gitignore
+            cat > .gitignore << 'EOF'
 # Logs
 logs
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
 # Dependency directories
 node_modules/
-
-# Build output
-dist/
-build/
 
 # Environment variables
 .env
@@ -252,50 +261,281 @@ build/
 .env.test.local
 .env.production.local
 
-# Coverage directory
-coverage/
+# Build output
+dist/
+build/
 
 # Editor directories and files
-.idea/
 .vscode/
+.idea/
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
-.DS_Store
 EOF
-    
-    # Create README.md
-    cat > "README.md" << EOF
-# $project_name
+            ;;
+            
+        "express")
+            # Initialize npm
+            npm init -y
+            
+            # Install dependencies
+            npm install express
+            npm install --save-dev nodemon
+            
+            # Create basic structure
+            mkdir -p src
+            touch src/index.js
+            
+            # Add scripts
+            sed -i '' 's/"test": "echo \\"Error: no test specified\\" && exit 1"/"test": "echo \\"Error: no test specified\\" && exit 1",\n    "start": "node src\/index.js",\n    "dev": "nodemon src\/index.js"/' package.json
+            
+            # Create basic Express app
+            cat > src/index.js << 'EOF'
+const express = require('express');
+const app = express();
+const port = process.env.PORT || 3000;
 
-A Node.js project.
+app.use(express.json());
 
-## Installation
+app.get('/', (req, res) => {
+  res.json({ message: 'Hello from Express!' });
+});
 
-\`\`\`bash
-npm install
-\`\`\`
-
-## Usage
-
-\`\`\`bash
-npm start
-\`\`\`
-
-## Development
-
-\`\`\`bash
-npm run dev
-\`\`\`
-
-## Testing
-
-\`\`\`bash
-npm test
-\`\`\`
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
+});
 EOF
+            
+            # Create README
+            cat > README.md << 'EOF'
+# Express.js Project
+
+A basic Express.js project.
+
+## Getting Started
+
+1. Install dependencies: `npm install`
+2. Run in development mode: `npm run dev`
+3. Run in production mode: `npm start`
+
+## API Endpoints
+
+- GET / - Returns a welcome message
+EOF
+            
+            # Create .gitignore
+            cat > .gitignore << 'EOF'
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Dependency directories
+node_modules/
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Build output
+dist/
+build/
+
+# Editor directories and files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+EOF
+            ;;
+            
+        "typescript")
+            # Initialize npm
+            npm init -y
+            
+            # Install dependencies
+            npm install --save-dev typescript ts-node @types/node nodemon
+            
+            # Create tsconfig.json
+            npx tsc --init --rootDir src --outDir dist --esModuleInterop --resolveJsonModule --lib es6 --module commonjs --allowJs true --noImplicitAny true
+            
+            # Create basic structure
+            mkdir -p src
+            touch src/index.ts
+            
+            # Add scripts
+            sed -i '' 's/"test": "echo \\"Error: no test specified\\" && exit 1"/"test": "echo \\"Error: no test specified\\" && exit 1",\n    "start": "node dist\/index.js",\n    "build": "tsc",\n    "dev": "nodemon --exec ts-node src\/index.ts"/' package.json
+            
+            # Create basic TypeScript file
+            cat > src/index.ts << 'EOF'
+const greeting: string = 'Hello, TypeScript!';
+console.log(greeting);
+EOF
+            
+            # Create README
+            cat > README.md << 'EOF'
+# TypeScript Project
+
+A basic TypeScript project.
+
+## Getting Started
+
+1. Install dependencies: `npm install`
+2. Run in development mode: `npm run dev`
+3. Build the project: `npm run build`
+4. Run the built project: `npm start`
+EOF
+            
+            # Create .gitignore
+            cat > .gitignore << 'EOF'
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Dependency directories
+node_modules/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Build output
+dist/
+build/
+
+# Editor directories and files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+EOF
+            ;;
+            
+        "ts-express")
+            # Initialize npm
+            npm init -y
+            
+            # Install dependencies
+            npm install express
+            npm install --save-dev typescript ts-node @types/node @types/express nodemon
+            
+            # Create tsconfig.json
+            npx tsc --init --rootDir src --outDir dist --esModuleInterop --resolveJsonModule --lib es6 --module commonjs --allowJs true --noImplicitAny true
+            
+            # Create basic structure
+            mkdir -p src
+            touch src/index.ts
+            
+            # Add scripts
+            sed -i '' 's/"test": "echo \\"Error: no test specified\\" && exit 1"/"test": "echo \\"Error: no test specified\\" && exit 1",\n    "start": "node dist\/index.js",\n    "build": "tsc",\n    "dev": "nodemon --exec ts-node src\/index.ts"/' package.json
+            
+            # Create basic Express app with TypeScript
+            cat > src/index.ts << 'EOF'
+import express, { Request, Response } from 'express';
+
+const app = express();
+const port = process.env.PORT || 3000;
+
+app.use(express.json());
+
+app.get('/', (req: Request, res: Response) => {
+  res.json({ message: 'Hello from Express with TypeScript!' });
+});
+
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
+});
+EOF
+            
+            # Create README
+            cat > README.md << 'EOF'
+# Express.js with TypeScript Project
+
+A basic Express.js project with TypeScript.
+
+## Getting Started
+
+1. Install dependencies: `npm install`
+2. Run in development mode: `npm run dev`
+3. Build the project: `npm run build`
+4. Run the built project: `npm start`
+
+## API Endpoints
+
+- GET / - Returns a welcome message
+EOF
+            
+            # Create .gitignore
+            cat > .gitignore << 'EOF'
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Dependency directories
+node_modules/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Build output
+dist/
+build/
+
+# Editor directories and files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+EOF
+            ;;
+            
+        *)
+            echo "Unknown template: $template"
+            echo "Available templates: basic, express, typescript, ts-express"
+            return 1
+            ;;
+    esac
     
     # Initialize git repository if git is available
     if command -v git >/dev/null 2>&1; then
@@ -304,105 +544,20 @@ EOF
         git commit -m "Initial commit"
     fi
     
-    echo "Node.js project '$project_name' created successfully!"
+    echo "Node.js project '${project_name}' created successfully with '${template}' template!"
 }
 
-new-react-app() {
-    if [ $# -lt 1 ]; then
-        echo "Usage: new-react-app <project-name> [--ts|--js]"
+# Create Vite project with various templates
+create-vite-app() {
+    local project_name=$1
+    local template=${2:-"react"}
+    
+    if [ -z "$project_name" ]; then
+        echo "Error: Project name is required."
+        echo "Usage: create-vite-app <project-name> [template]"
+        echo "Available templates: vanilla, vanilla-ts, react, react-ts, vue, vue-ts, preact, preact-ts, lit, lit-ts, svelte, svelte-ts"
         return 1
     fi
-    
-    local project_name=$1
-    local project_type=${2:-"--js"}
-    
-    if [[ "$project_type" == "--ts" ]]; then
-        npx create-react-app "$project_name" --template typescript
-    else
-        npx create-react-app "$project_name"
-    fi
-    
-    cd "$project_name" || return
-    echo "React app '$project_name' created successfully!"
-}
-
-new-next-app() {
-    if [ $# -lt 1 ]; then
-        echo "Usage: new-next-app <project-name> [--ts|--js]"
-        return 1
-    fi
-    
-    local project_name=$1
-    local project_type=${2:-"--js"}
-    
-    if [[ "$project_type" == "--ts" ]]; then
-        npx create-next-app "$project_name" --typescript
-    else
-        npx create-next-app "$project_name"
-    fi
-    
-    cd "$project_name" || return
-    echo "Next.js app '$project_name' created successfully!"
-}
-
-new-vue-app() {
-    if [ $# -lt 1 ]; then
-        echo "Usage: new-vue-app <project-name> [--ts|--js]"
-        return 1
-    fi
-    
-    local project_name=$1
-    local project_type=${2:-"--js"}
-    
-    if [[ "$project_type" == "--ts" ]]; then
-        npx @vue/cli create "$project_name" --preset ts
-    else
-        npx @vue/cli create "$project_name"
-    fi
-    
-    cd "$project_name" || return
-    echo "Vue.js app '$project_name' created successfully!"
-}
-
-new-vite-app() {
-    if [ $# -lt 1 ]; then
-        echo "Usage: new-vite-app <project-name> [--react|--vue|--svelte] [--ts|--js]"
-        return 1
-    fi
-    
-    local project_name=$1
-    local framework=${2:-"--react"}
-    local language=${3:-"--js"}
-    
-    local template=""
-    
-    case "$framework" in
-        --react)
-            if [[ "$language" == "--ts" ]]; then
-                template="react-ts"
-            else
-                template="react"
-            fi
-            ;;
-        --vue)
-            if [[ "$language" == "--ts" ]]; then
-                template="vue-ts"
-            else
-                template="vue"
-            fi
-            ;;
-        --svelte)
-            if [[ "$language" == "--ts" ]]; then
-                template="svelte-ts"
-            else
-                template="svelte"
-            fi
-            ;;
-        *)
-            echo "Unknown framework: $framework"
-            return 1
-            ;;
-    esac
     
     npx create-vite "$project_name" --template "$template"
     
@@ -425,9 +580,9 @@ main() {
     # Create modular configuration
     create_nodejs_config
     
-    # Check if oh-my-zsh.zsh is already sourcing the modular configs
+    # Check if .zshrc is already sourcing the modular configs
     if ! grep -q "source \"\$HOME/.jarvistoolset/zsh_configs/nodejs.zsh\"" "$HOME/.zshrc"; then
-        # Add a line to source the Node.js config in .zshrc if oh-my-zsh.zsh isn't handling it
+        # Add a line to source the Node.js config in .zshrc
         cat >> "$HOME/.zshrc" << 'EOL'
 # Load Node.js configuration
 source "$HOME/.jarvistoolset/zsh_configs/nodejs.zsh"

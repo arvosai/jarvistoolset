@@ -3,14 +3,6 @@
 # Get the directory of the current script
 SCRIPT_DIR=${0:a:h}
 source "${SCRIPT_DIR}/../../../utils.zsh"
-source "${SCRIPT_DIR}/../../utils.zsh" 2>/dev/null || true  # Source local utils if available
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-
-cd "$(dirname "${BASH_SOURCE[0]}")" \
-    && source "../../utils.zsh" \
-    && source "./utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -36,76 +28,72 @@ else
     source "$HOME/.sdkman/bin/sdkman-init.sh"
 fi
 
-# Verify sdk command is available
-if ! command -v sdk &> /dev/null; then
-    print_error "SDKMAN 'sdk' command not found. Please check your SDKMAN installation."
-    exit 1
-fi
+# Function to install SDK with auto-accept
+sdk_install() {
+    local package=$1
+    local version=$2
+    local readable_name=$3
+    
+    # Check if already installed
+    if sdk list "${package}" | grep -q "\b${version}\b.*\*"; then
+        print_success "${readable_name} (already installed)"
+        return 0
+    fi
+    
+    # Use printf to avoid the "yes: stdout: Broken pipe" error
+    printf "y\n" | sdk install "${package}" "${version}" &>/dev/null
+    
+    if sdk list "${package}" | grep -q "\b${version}\b.*\*"; then
+        print_success "${readable_name}"
+        return 0
+    else
+        print_error "Failed to install ${readable_name}"
+        return 1
+    fi
+}
 
 # Install Java versions
 print_in_purple "\n   Installing Java Versions\n\n"
 
-# Install Java 21 (latest LTS)
-yes | sdk install java 21.0.2-tem &> /dev/null
-if [[ $? -eq 0 ]]; then
-    print_success "Java 21 (Temurin)"
-    
-    # Set as default
-    sdk default java 21.0.2-tem &> /dev/null
-    print_result $? "Setting Java 21 as default"
-else
-    print_error "Java 21 (Temurin)"
-fi
+# Install Java 21 (LTS)
+sdk_install "java" "21.0.2-tem" "Java 21 (Temurin)"
 
-# Install Java 17 (previous LTS)
-yes | sdk install java 17.0.9-tem &> /dev/null
-if [[ $? -eq 0 ]]; then
-    print_success "Java 17 (Temurin)"
-else
-    print_error "Java 17 (Temurin)"
-fi
+# Set Java 21 as default
+sdk default java 21.0.2-tem &> /dev/null
+print_result $? "Setting Java 21 as default"
 
-# Install Java 11 (older LTS for legacy projects)
-yes | sdk install java 11.0.22-tem &> /dev/null
-if [[ $? -eq 0 ]]; then
-    print_success "Java 11 (Temurin)"
-else
-    print_error "Java 11 (Temurin)"
-fi
+# Install Java 17 (LTS)
+sdk_install "java" "17.0.9-tem" "Java 17 (Temurin)"
 
-# Install build tools
+# Install Java 11 (LTS)
+sdk_install "java" "11.0.22-tem" "Java 11 (Temurin)"
+
+# Install Java build tools
 print_in_purple "\n   Installing Java Build Tools\n\n"
 
 # Install Maven
-yes | sdk install maven &> /dev/null
-print_result $? "Maven"
+sdk_install "maven" "latest" "Maven"
 
 # Install Gradle
-yes | sdk install gradle &> /dev/null
-print_result $? "Gradle"
+sdk_install "gradle" "latest" "Gradle"
 
 # Install Ant
-yes | sdk install ant &> /dev/null
-print_result $? "Ant"
+sdk_install "ant" "latest" "Ant"
 
-# Install development tools
+# Install Java development tools
 print_in_purple "\n   Installing Java Development Tools\n\n"
 
 # Install Spring Boot CLI
-yes | sdk install springboot &> /dev/null
-print_result $? "Spring Boot CLI"
+sdk_install "springboot" "latest" "Spring Boot CLI"
 
 # Install Quarkus CLI
-yes | sdk install quarkus &> /dev/null
-print_result $? "Quarkus CLI"
+sdk_install "quarkus" "latest" "Quarkus CLI"
 
 # Install JBang
-yes | sdk install jbang &> /dev/null
-print_result $? "JBang"
+sdk_install "jbang" "latest" "JBang"
 
 # Install VisualVM
-yes | sdk install visualvm &> /dev/null
-print_result $? "VisualVM"
+sdk_install "visualvm" "latest" "VisualVM"
 
 # Configure Maven settings
 print_in_purple "\n   Configuring Maven\n\n"
@@ -195,6 +183,108 @@ create_java_config() {
 # Java configuration for zsh
 # This file contains all Java-related configurations
 #
+
+# Java installation and configuration
+setup_java() {
+    # Check if Java is installed
+    if ! /usr/libexec/java_home &>/dev/null; then
+        echo "Java is not installed. Installing Java..."
+        
+        # Check if Homebrew is installed
+        if command -v brew &>/dev/null; then
+            brew install --cask temurin
+            
+            # Verify installation
+            if ! /usr/libexec/java_home &>/dev/null; then
+                echo "Java installation failed. Please install manually using:"
+                echo "brew install --cask temurin"
+                return 1
+            fi
+        elif command -v sdk &>/dev/null; then
+            # If SDKMAN is available, use it to install Java
+            sdk install java
+            
+            # Verify installation
+            if ! /usr/libexec/java_home &>/dev/null; then
+                echo "Java installation failed. Please install manually using:"
+                echo "sdk install java"
+                return 1
+            fi
+        else
+            echo "Neither Homebrew nor SDKMAN is installed."
+            echo "Please install Java manually:"
+            echo "1. Install Homebrew: /bin/bash -c \"\$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\""
+            echo "2. Install Java: brew install --cask temurin"
+            return 1
+        fi
+        
+        echo "Java installed successfully."
+    fi
+    
+    # Set Java environment variables
+    export JAVA_HOME=$(/usr/libexec/java_home)
+    export PATH="$JAVA_HOME/bin:$PATH"
+    return 0
+}
+
+# Setup Java environment
+setup_java
+
+# Maven setup
+setup_maven() {
+    if [ -d "$HOME/.sdkman/candidates/maven/current" ]; then
+        export M2_HOME="$HOME/.sdkman/candidates/maven/current"
+        export PATH="$M2_HOME/bin:$PATH"
+        return 0
+    elif command -v sdk &>/dev/null && setup_java; then
+        echo "Maven not found. Installing Maven via SDKMAN..."
+        sdk install maven
+        
+        if [ -d "$HOME/.sdkman/candidates/maven/current" ]; then
+            export M2_HOME="$HOME/.sdkman/candidates/maven/current"
+            export PATH="$M2_HOME/bin:$PATH"
+            echo "Maven installed successfully."
+            return 0
+        else
+            echo "Maven installation failed."
+            return 1
+        fi
+    else
+        echo "Maven not installed and SDKMAN not available."
+        return 1
+    fi
+}
+
+# Setup Maven environment
+setup_maven
+
+# Gradle setup
+setup_gradle() {
+    if [ -d "$HOME/.sdkman/candidates/gradle/current" ]; then
+        export GRADLE_HOME="$HOME/.sdkman/candidates/gradle/current"
+        export PATH="$GRADLE_HOME/bin:$PATH"
+        return 0
+    elif command -v sdk &>/dev/null && setup_java; then
+        echo "Gradle not found. Installing Gradle via SDKMAN..."
+        sdk install gradle
+        
+        if [ -d "$HOME/.sdkman/candidates/gradle/current" ]; then
+            export GRADLE_HOME="$HOME/.sdkman/candidates/gradle/current"
+            export PATH="$GRADLE_HOME/bin:$PATH"
+            echo "Gradle installed successfully."
+            return 0
+        else
+            echo "Gradle installation failed."
+            return 1
+        fi
+    else
+        echo "Gradle not installed and SDKMAN not available."
+        return 1
+    fi
+}
+
+# Setup Gradle environment
+setup_gradle
 
 # SDKMAN configuration
 export SDKMAN_DIR="$HOME/.sdkman"

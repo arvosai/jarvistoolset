@@ -1,41 +1,56 @@
 #!/bin/zsh
-#
-# Go configuration for zsh
-# This file contains all Go-related configurations
-#
 
-# Go environment variables
-export GOROOT=/usr/local/go
-export GOPATH=$HOME/go
-export GOBIN=$GOPATH/bin
-export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+# Go configuration
+
+# Set Go environment variables
+export GOPATH="$HOME/go"
+export GOROOT="$(brew --prefix go)/libexec"
+export PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
+
+# Create Go workspace directories if they don't exist
+mkdir -p "$GOPATH/src"
+mkdir -p "$GOPATH/bin"
+mkdir -p "$GOPATH/pkg"
 
 # Go aliases
-alias gofmt="gofmt -w"
-alias govet="go vet"
+alias gob="go build"
+alias gor="go run"
+alias got="go test"
+alias goc="go clean"
+alias goi="go install"
+alias gof="go fmt"
+alias god="go doc"
+alias gol="go list"
+alias gomod="go mod"
+alias goget="go get"
 alias gotest="go test ./..."
-alias gocover="go test -cover ./..."
-alias gobench="go test -bench=. ./..."
+alias gobench="go test -bench=."
+alias goclean="go clean -i -r"
+alias gocover="go test -cover"
+alias goprofile="go test -cpuprofile=cpu.prof -memprofile=mem.prof"
 
-# Go project creation function
-new-go() {
+# Function to create a new Go project
+go_new_project() {
     if [ $# -lt 1 ]; then
-        echo "Usage: new-go <project-name> [module-name]"
+        echo "Usage: go_new_project <project_name> [module_path]"
         return 1
     fi
     
-    local project_name=$1
-    local module_name=${2:-"github.com/$(whoami)/$project_name"}
+    local project_name="$1"
+    local module_path="${2:-github.com/$(whoami)/$project_name}"
     
     # Create project directory
     mkdir -p "$project_name"
-    cd "$project_name" || return
+    cd "$project_name" || return 1
     
     # Initialize Go module
-    go mod init "$module_name"
+    go mod init "$module_path"
+    
+    # Create basic directory structure
+    mkdir -p cmd pkg internal
     
     # Create main.go
-    cat > main.go << EOF
+    cat > cmd/main.go << 'EOF'
 package main
 
 import (
@@ -43,27 +58,21 @@ import (
 )
 
 func main() {
-	fmt.Println("Hello, $project_name!")
+	fmt.Println("Hello, Go!")
 }
 EOF
     
-    # Create .gitignore
-    cat > .gitignore << EOF
-# Binaries for programs and plugins
-*.exe
-*.exe~
-*.dll
-*.so
-*.dylib
+    # Create README.md
+    cat > README.md << EOF
+# $project_name
 
-# Test binary, built with 'go test -c'
-*.test
+A Go project.
 
-# Output of the go coverage tool
-*.out
+## Usage
 
-# Dependency directories
-/vendor/
+\`\`\`
+go run cmd/main.go
+\`\`\`
 EOF
     
     # Initialize git repository if git is available

@@ -4,6 +4,108 @@
 # This file contains all Java-related configurations
 #
 
+# Java installation and configuration
+setup_java() {
+    # Check if Java is installed
+    if ! /usr/libexec/java_home &>/dev/null; then
+        echo "Java is not installed. Installing Java..."
+        
+        # Check if Homebrew is installed
+        if command -v brew &>/dev/null; then
+            brew install --cask temurin
+            
+            # Verify installation
+            if ! /usr/libexec/java_home &>/dev/null; then
+                echo "Java installation failed. Please install manually using:"
+                echo "brew install --cask temurin"
+                return 1
+            fi
+        elif command -v sdk &>/dev/null; then
+            # If SDKMAN is available, use it to install Java
+            sdk install java
+            
+            # Verify installation
+            if ! /usr/libexec/java_home &>/dev/null; then
+                echo "Java installation failed. Please install manually using:"
+                echo "sdk install java"
+                return 1
+            fi
+        else
+            echo "Neither Homebrew nor SDKMAN is installed."
+            echo "Please install Java manually:"
+            echo "1. Install Homebrew: /bin/bash -c \"\$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\""
+            echo "2. Install Java: brew install --cask temurin"
+            return 1
+        fi
+        
+        echo "Java installed successfully."
+    fi
+    
+    # Set Java environment variables
+    export JAVA_HOME=$(/usr/libexec/java_home)
+    export PATH="$JAVA_HOME/bin:$PATH"
+    return 0
+}
+
+# Setup Java environment
+setup_java
+
+# Maven setup
+setup_maven() {
+    if [ -d "$HOME/.sdkman/candidates/maven/current" ]; then
+        export M2_HOME="$HOME/.sdkman/candidates/maven/current"
+        export PATH="$M2_HOME/bin:$PATH"
+        return 0
+    elif command -v sdk &>/dev/null && setup_java; then
+        echo "Maven not found. Installing Maven via SDKMAN..."
+        sdk install maven
+        
+        if [ -d "$HOME/.sdkman/candidates/maven/current" ]; then
+            export M2_HOME="$HOME/.sdkman/candidates/maven/current"
+            export PATH="$M2_HOME/bin:$PATH"
+            echo "Maven installed successfully."
+            return 0
+        else
+            echo "Maven installation failed."
+            return 1
+        fi
+    else
+        echo "Maven not installed and SDKMAN not available."
+        return 1
+    fi
+}
+
+# Setup Maven environment
+setup_maven
+
+# Gradle setup
+setup_gradle() {
+    if [ -d "$HOME/.sdkman/candidates/gradle/current" ]; then
+        export GRADLE_HOME="$HOME/.sdkman/candidates/gradle/current"
+        export PATH="$GRADLE_HOME/bin:$PATH"
+        return 0
+    elif command -v sdk &>/dev/null && setup_java; then
+        echo "Gradle not found. Installing Gradle via SDKMAN..."
+        sdk install gradle
+        
+        if [ -d "$HOME/.sdkman/candidates/gradle/current" ]; then
+            export GRADLE_HOME="$HOME/.sdkman/candidates/gradle/current"
+            export PATH="$GRADLE_HOME/bin:$PATH"
+            echo "Gradle installed successfully."
+            return 0
+        else
+            echo "Gradle installation failed."
+            return 1
+        fi
+    else
+        echo "Gradle not installed and SDKMAN not available."
+        return 1
+    fi
+}
+
+# Setup Gradle environment
+setup_gradle
+
 # SDKMAN configuration
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"

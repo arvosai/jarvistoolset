@@ -3,14 +3,6 @@
 # Get the directory of the current script
 SCRIPT_DIR=${0:a:h}
 source "${SCRIPT_DIR}/../../../utils.zsh"
-source "${SCRIPT_DIR}/../../utils.zsh" 2>/dev/null || true  # Source local utils if available
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-
-cd "$(dirname "${BASH_SOURCE[0]}")" \
-    && source "../../utils.zsh" \
-    && source "./utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -29,43 +21,58 @@ create_go_config() {
     # Create Go configuration file
     cat > "$config_file" << 'EOL'
 #!/bin/zsh
-#
-# Go configuration for zsh
-# This file contains all Go-related configurations
-#
 
-# Go environment variables
-export GOROOT=/usr/local/go
-export GOPATH=$HOME/go
-export GOBIN=$GOPATH/bin
-export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+# Go configuration
+
+# Set Go environment variables
+export GOPATH="$HOME/go"
+export GOROOT="$(brew --prefix go)/libexec"
+export PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
+
+# Create Go workspace directories if they don't exist
+mkdir -p "$GOPATH/src"
+mkdir -p "$GOPATH/bin"
+mkdir -p "$GOPATH/pkg"
 
 # Go aliases
-alias gofmt="gofmt -w"
-alias govet="go vet"
+alias gob="go build"
+alias gor="go run"
+alias got="go test"
+alias goc="go clean"
+alias goi="go install"
+alias gof="go fmt"
+alias god="go doc"
+alias gol="go list"
+alias gomod="go mod"
+alias goget="go get"
 alias gotest="go test ./..."
-alias gocover="go test -cover ./..."
-alias gobench="go test -bench=. ./..."
+alias gobench="go test -bench=."
+alias goclean="go clean -i -r"
+alias gocover="go test -cover"
+alias goprofile="go test -cpuprofile=cpu.prof -memprofile=mem.prof"
 
-# Go project creation function
-new-go() {
+# Function to create a new Go project
+go_new_project() {
     if [ $# -lt 1 ]; then
-        echo "Usage: new-go <project-name> [module-name]"
+        echo "Usage: go_new_project <project_name> [module_path]"
         return 1
     fi
     
-    local project_name=$1
-    local module_name=${2:-"github.com/$(whoami)/$project_name"}
+    local project_name="$1"
+    local module_path="${2:-github.com/$(whoami)/$project_name}"
     
     # Create project directory
     mkdir -p "$project_name"
-    cd "$project_name" || return
+    cd "$project_name" || return 1
     
     # Initialize Go module
-    go mod init "$module_name"
+    go mod init "$module_path"
+    
+    # Create basic directory structure
+    mkdir -p cmd pkg internal
     
     # Create main.go
-    cat > main.go << EOF
+    cat > cmd/main.go << 'EOF'
 package main
 
 import (
@@ -73,27 +80,21 @@ import (
 )
 
 func main() {
-	fmt.Println("Hello, $project_name!")
+	fmt.Println("Hello, Go!")
 }
 EOF
     
-    # Create .gitignore
-    cat > .gitignore << EOF
-# Binaries for programs and plugins
-*.exe
-*.exe~
-*.dll
-*.so
-*.dylib
+    # Create README.md
+    cat > README.md << EOF
+# $project_name
 
-# Test binary, built with 'go test -c'
-*.test
+A Go project.
 
-# Output of the go coverage tool
-*.out
+## Usage
 
-# Dependency directories
-/vendor/
+\`\`\`
+go run cmd/main.go
+\`\`\`
 EOF
     
     # Initialize git repository if git is available
@@ -118,29 +119,42 @@ mkdir -p "$HOME/go/pkg"
 # Install Go tools
 print_in_purple "\n   Installing Go Tools\n\n"
 
+# Setup GOROOT and GOPATH for Go tools
+export GOROOT="$(brew --prefix go)/libexec"
+export PATH="$GOROOT/bin:$PATH"
+export GOPATH="$HOME/go"
+export PATH="$GOPATH/bin:$PATH"
+
 # Install essential Go tools
 go_install() {
     declare -r PACKAGE="$1"
     declare -r PACKAGE_READABLE_NAME="$2"
+    declare -r BINARY_NAME="${3:-$(basename "$PACKAGE")}"
 
-    if command -v "$PACKAGE" &> /dev/null; then
-        print_success "$PACKAGE_READABLE_NAME"
+    if command -v "$BINARY_NAME" &> /dev/null; then
+        print_success "$PACKAGE_READABLE_NAME (already installed)"
     else
-        execute "go install $PACKAGE@latest" "$PACKAGE_READABLE_NAME"
+        # Check if package already includes @latest
+        if [[ "$PACKAGE" == *"@latest"* ]]; then
+            go install "$PACKAGE" > /dev/null 2>&1 && print_success "$PACKAGE_READABLE_NAME" || print_error "Failed to install $PACKAGE_READABLE_NAME"
+        else
+            go install "$PACKAGE@latest" > /dev/null 2>&1 && print_success "$PACKAGE_READABLE_NAME" || print_error "Failed to install $PACKAGE_READABLE_NAME"
+        fi
     fi
 }
 
-go_install "golang.org/x/tools/gopls@latest" "Go Language Server"
-go_install "github.com/go-delve/delve/cmd/dlv@latest" "Go Debugger"
-go_install "golang.org/x/lint/golint@latest" "Go Linter"
-go_install "github.com/golangci/golangci-lint/cmd/golangci-lint@latest" "GolangCI Lint"
-go_install "github.com/fatih/gomodifytags@latest" "Go Modify Tags"
-go_install "github.com/josharian/impl@latest" "Go Implementation Generator"
-go_install "github.com/cweill/gotests/gotests@latest" "Go Test Generator"
-go_install "github.com/haya14busa/goplay/cmd/goplay@latest" "Go Playground"
-go_install "github.com/stamblerre/gocode@latest" "Go Code"
-go_install "github.com/ramya-rao-a/go-outline@latest" "Go Outline"
-go_install "github.com/uudashr/gopkgs/v2/cmd/gopkgs@latest" "Go Packages"
+# Install Go tools with proper binary names
+go_install "golang.org/x/tools/gopls" "Go Language Server" "gopls"
+go_install "github.com/go-delve/delve/cmd/dlv" "Go Debugger" "dlv"
+go_install "golang.org/x/lint/golint" "Go Linter" "golint"
+go_install "github.com/golangci/golangci-lint/cmd/golangci-lint" "GolangCI Lint" "golangci-lint"
+go_install "github.com/fatih/gomodifytags" "Go Modify Tags" "gomodifytags"
+go_install "github.com/josharian/impl" "Go Implementation Generator" "impl"
+go_install "github.com/cweill/gotests/gotests" "Go Test Generator" "gotests"
+go_install "github.com/haya14busa/goplay/cmd/goplay" "Go Playground" "goplay"
+go_install "github.com/stamblerre/gocode" "Go Code" "gocode"
+go_install "github.com/ramya-rao-a/go-outline" "Go Outline" "go-outline"
+go_install "github.com/uudashr/gopkgs/v2/cmd/gopkgs" "Go Packages" "gopkgs"
 
 # Create modular configuration
 create_go_config
