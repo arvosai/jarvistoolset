@@ -6,6 +6,16 @@ source "${SCRIPT_DIR}/utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+# Create framed header with script details and tools list
+create_framed_header "$0" "Installs and configures initialize_git_repository tools" No specific tools identified in script
+
+
+# Create framed header with script details and tools list
+
+
+# Create framed header with script details and tools list
+
+
 initialize_git_repository() {
     local -r GIT_ORIGIN="$1"
 
@@ -35,7 +45,10 @@ initialize_git_repository() {
         execute "git config --global user.email '$EMAIL'" \
             "Add email '$EMAIL'" 
 
-        print_in_purple "\n   Git repository initialized successfully\n\n"
+        print_in_purple "
+   Git repository initialized successfully
+
+"
 
     fi
 }
@@ -43,7 +56,10 @@ initialize_git_repository() {
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 main() {
-    print_in_purple "\n   Initialize Git repository\n\n"
+    print_in_purple "
+   Initialize Git repository
+
+"
     initialize_git_repository "$1"
 }
 

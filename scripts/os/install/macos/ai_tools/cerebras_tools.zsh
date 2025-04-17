@@ -4,10 +4,12 @@
 SCRIPT_DIR=${0:a:h}
 source "${SCRIPT_DIR}/utils.zsh"
 
-print_in_purple "\n   Cerebras AI Tools\n\n"
+print_in_purple "
+   Cerebras AI Tools
+
+"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 # Core Cerebras
 execute "pip3 install cerebras-sdk" \
     "Installing Cerebras SDK"

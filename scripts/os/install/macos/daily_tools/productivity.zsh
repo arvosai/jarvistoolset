@@ -6,8 +6,10 @@ source "${SCRIPT_DIR}/../../utils.zsh"
 source "${SCRIPT_DIR}/utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+print_in_purple "
+ >> Installing Productivity Tools
 
-print_in_purple "\n >> Installing Productivity Tools\n\n"
+"
 
 # Install Alfred (Spotlight replacement)
 if brew_install "Alfred" "alfred" "--cask"; then
@@ -34,4 +36,7 @@ if brew_install "Obsidian" "obsidian" "--cask"; then
     print_success "Obsidian installed"
 fi
 
-print_in_purple "\n >> Productivity Tools installation completed\n\n"
+print_in_purple "
+ >> Productivity Tools installation completed
+
+"

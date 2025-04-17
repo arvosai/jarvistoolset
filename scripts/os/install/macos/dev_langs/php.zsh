@@ -6,12 +6,11 @@ source "${SCRIPT_DIR}/../../../utils.zsh"
 source "${SCRIPT_DIR}/../../../utils.zsh" 2>/dev/null || true  # Source local utils if available
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-
-
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+print_in_purple "
+   PHP Development Tools
 
-print_in_purple "\n   PHP Development Tools\n\n"
+"
 
 # Install PHP and core extensions
 brew_install "PHP" "php"
@@ -21,7 +20,10 @@ brew_install "Composer" "composer"
 brew_install "PHP Version Manager" "phpenv"
 
 # Install common PHP extensions
-print_in_purple "\n   Installing PHP Extensions\n\n"
+print_in_purple "
+   Installing PHP Extensions
+
+"
 
 brew_install "ImageMagick" "imagemagick"
 brew_install "PHP ImageMagick Extension" "php-imagick"
@@ -31,7 +33,10 @@ brew_install "PHP Memcached" "php-memcached"
 brew_install "PHP MongoDB" "php-mongodb"
 
 # Development Tools
-print_in_purple "\n   Installing Development Tools\n\n"
+print_in_purple "
+   Installing Development Tools
+
+"
 
 # Install Laravel installer
 composer global require laravel/installer
@@ -168,12 +173,12 @@ new-php() {
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "App\\\\": "src/"
+            "App\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\\\": "tests/"
+            "Tests\": "tests/"
         }
     },
     "require": {
@@ -199,7 +204,7 @@ EOF
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use App\\App;
+use App\App;
 
 \$app = new App();
 \$app->run();

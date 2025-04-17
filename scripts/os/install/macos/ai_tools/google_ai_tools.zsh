@@ -4,10 +4,12 @@
 SCRIPT_DIR=${0:a:h} \
     source "../../utils.zsh"
 
-print_in_purple "\n   Google AI Tools\n\n"
+print_in_purple "
+   Google AI Tools
+
+"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 # Core Google AI
 execute "pip3 install google-generativeai" \
     "Installing Google Generative AI"

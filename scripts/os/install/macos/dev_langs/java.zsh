@@ -5,12 +5,17 @@ SCRIPT_DIR=${0:a:h}
 source "${SCRIPT_DIR}/../../../utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+print_in_purple "
+   Java Development Tools
 
-print_in_purple "\n   Java Development Tools\n\n"
+"
 
 # Install SDKMAN if not already installed
 if [[ ! -s "$HOME/.sdkman/bin/sdkman-init.sh" ]]; then
-    print_in_purple "\n   Installing SDKMAN\n\n"
+    print_in_purple "
+   Installing SDKMAN
+
+"
     
     # Install SDKMAN with error handling
     curl -s "https://get.sdkman.io" | bash &> /dev/null
@@ -35,15 +40,16 @@ sdk_install() {
     local readable_name=$3
     
     # Check if already installed
-    if sdk list "${package}" | grep -q "\b${version}\b.*\*"; then
+    if sdk list "${package}" | grep -q "${version}.*\*"; then
         print_success "${readable_name} (already installed)"
         return 0
     fi
     
     # Use printf to avoid the "yes: stdout: Broken pipe" error
-    printf "y\n" | sdk install "${package}" "${version}" &>/dev/null
+    printf "y
+" | sdk install "${package}" "${version}" &>/dev/null
     
-    if sdk list "${package}" | grep -q "\b${version}\b.*\*"; then
+    if sdk list "${package}" | grep -q "${version}.*\*"; then
         print_success "${readable_name}"
         return 0
     else
@@ -53,7 +59,10 @@ sdk_install() {
 }
 
 # Install Java versions
-print_in_purple "\n   Installing Java Versions\n\n"
+print_in_purple "
+   Installing Java Versions
+
+"
 
 # Install Java 21 (LTS)
 sdk_install "java" "21.0.2-tem" "Java 21 (Temurin)"
@@ -69,7 +78,10 @@ sdk_install "java" "17.0.9-tem" "Java 17 (Temurin)"
 sdk_install "java" "11.0.22-tem" "Java 11 (Temurin)"
 
 # Install Java build tools
-print_in_purple "\n   Installing Java Build Tools\n\n"
+print_in_purple "
+   Installing Java Build Tools
+
+"
 
 # Install Maven
 sdk_install "maven" "latest" "Maven"
@@ -81,7 +93,10 @@ sdk_install "gradle" "latest" "Gradle"
 sdk_install "ant" "latest" "Ant"
 
 # Install Java development tools
-print_in_purple "\n   Installing Java Development Tools\n\n"
+print_in_purple "
+   Installing Java Development Tools
+
+"
 
 # Install Spring Boot CLI
 sdk_install "springboot" "latest" "Spring Boot CLI"
@@ -96,7 +111,10 @@ sdk_install "jbang" "latest" "JBang"
 sdk_install "visualvm" "latest" "VisualVM"
 
 # Configure Maven settings
-print_in_purple "\n   Configuring Maven\n\n"
+print_in_purple "
+   Configuring Maven
+
+"
 
 # Create Maven settings directory if it doesn't exist
 mkdir -p "$HOME/.m2" &> /dev/null
@@ -144,7 +162,10 @@ EOL
 print_result $? "Maven configuration"
 
 # Configure Gradle settings
-print_in_purple "\n   Configuring Gradle\n\n"
+print_in_purple "
+   Configuring Gradle
+
+"
 
 # Create Gradle properties directory if it doesn't exist
 mkdir -p "$HOME/.gradle" &> /dev/null
@@ -635,4 +656,6 @@ EOL
     print_result $? "Added Java configuration to .zshrc"
 fi
 
-print_in_green "\n  Java development environment setup complete!\n"
+print_in_green "
+  Java development environment setup complete!
+"

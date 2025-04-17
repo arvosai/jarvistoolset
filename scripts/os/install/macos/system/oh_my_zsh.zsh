@@ -9,6 +9,7 @@
 # Get the directory of the current script
 SCRIPT_DIR=${0:a:h}
 source "${SCRIPT_DIR}/../../../utils.zsh"
+source "${SCRIPT_DIR}/../utils.zsh"
 source "${SCRIPT_DIR}/../utils.zsh" 2>/dev/null || true  # Source local utils if available
 
 # Check if Oh My Zsh is already installed
@@ -125,7 +126,7 @@ esac
 
 () {
   local LC_ALL="" LC_CTYPE="en_US.UTF-8"
-  SEGMENT_SEPARATOR="%{%F{green} \ue0b1%}%{%f "
+  SEGMENT_SEPARATOR="%{%F{green} %}%{%f "
   
   fortune | cowsay -t $1 -f eyes
 
@@ -174,7 +175,7 @@ prompt_end() {
 prompt_status() {
   local -a symbols
 
-  symbols="%{%F{white}%}\ue635"
+  symbols="%{%F{white}%}"
 
   [[ $RETVAL -ne 0 ]] && symbols+="%{%F{red}%} ✘"
   [[ $UID -eq 0 ]] && symbols+="%{%F{yellow}%} ⚡"
@@ -203,7 +204,7 @@ prompt_git() {
   local PL_BRANCH_CHAR
   () {
     local LC_ALL="" LC_CTYPE="en_US.UTF-8"
-    PL_BRANCH_CHAR=$'\ue0a0'         # 
+    PL_BRANCH_CHAR=$''         # 
   }
   local ref dirty mode repo_path
 
@@ -224,11 +225,11 @@ prompt_git() {
     ahead=$(command git log --oneline @{upstream}.. 2>/dev/null)
     behind=$(command git log --oneline ..@{upstream} 2>/dev/null)
     if [[ -n "$ahead" ]] && [[ -n "$behind" ]]; then
-      PL_BRANCH_CHAR=$'\u21c5'
+      PL_BRANCH_CHAR=$'⇅'
     elif [[ -n "$ahead" ]]; then
-      PL_BRANCH_CHAR=$'\u21b1'
+      PL_BRANCH_CHAR=$'↱'
     elif [[ -n "$behind" ]]; then
-      PL_BRANCH_CHAR=$'\u21b0'
+      PL_BRANCH_CHAR=$'↰'
     fi
 
     if [[ -e "${repo_path}/BISECT_LOG" ]]; then

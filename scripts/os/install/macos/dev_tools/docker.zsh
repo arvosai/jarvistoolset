@@ -6,15 +6,15 @@ source "${SCRIPT_DIR}/../../../utils.zsh"
 source "${SCRIPT_DIR}/../../utils.zsh" 2>/dev/null || true  # Source local utils if available
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-
 cd "$(dirname "${BASH_SOURCE[0]}")" \
     && source "../../utils.zsh" \
     && source "./utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+print_in_purple "
+   Docker
 
-print_in_purple "\n   Docker\n\n"
+"
 
 # Install Docker Desktop for Mac
 print_info "Installing Docker Desktop for Mac..."
@@ -88,7 +88,7 @@ docker-killall() {
 }
 
 docker-stats() {
-    docker stats --format "table {{.Name}}\t{{.CPUPerc}}\t{{.MemUsage}}\t{{.NetIO}}\t{{.BlockIO}}"
+    docker stats --format "table {{.Name}}	{{.CPUPerc}}	{{.MemUsage}}	{{.NetIO}}	{{.BlockIO}}"
 }
 
 # Docker project creation function
@@ -136,7 +136,7 @@ EOF
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js",
-    "test": "echo \\"Error: no test specified\\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
@@ -481,4 +481,6 @@ EOL
     print_result $? "Added Docker configuration to .zshrc"
 fi
 
-print_in_green "\n  Docker setup complete!\n"
+print_in_green "
+  Docker setup complete!
+"

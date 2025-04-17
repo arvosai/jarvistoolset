@@ -6,6 +6,16 @@ source "${SCRIPT_DIR}/../../utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+# Create framed header with script details and tools list
+create_framed_header "$0" "Installs and configures trackpad tools" No specific tools identified in script
+
+
+# Create framed header with script details and tools list
+
+
+# Create framed header with script details and tools list
+
+
 # Minimum supported macOS version for this script
 MINIMUM_MACOS_VERSION="14.0.0"  # macOS Sonoma
 
@@ -15,7 +25,8 @@ check_macos_compatibility() {
     
     if ! is_supported_version "$current_version" "$MINIMUM_MACOS_VERSION"; then
         print_error "Your macOS version ($current_version) is not supported for Trackpad preferences"
-        print_in_yellow "Please upgrade to macOS Sonoma ($MINIMUM_MACOS_VERSION) or later.\n"
+        print_in_yellow "Please upgrade to macOS Sonoma ($MINIMUM_MACOS_VERSION) or later.
+"
         return 1
     fi
     
@@ -30,7 +41,10 @@ fi
 # Get macOS major version for version-specific settings
 MACOS_MAJOR_VERSION=$(sw_vers -productVersion | cut -d. -f1)
 
-print_in_purple "\n   Trackpad\n\n"
+print_in_purple "
+   Trackpad
+
+"
 
 # Enable tap to click
 execute "defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true" \
@@ -73,7 +87,8 @@ execute "defaults write com.apple.dock showAppExposeGestureEnabled -bool true" \
 # Enable three finger drag
 if [[ $MACOS_MAJOR_VERSION -ge 14 ]]; then
     # In Sonoma, this setting might be in a different location
-    print_in_yellow "Note: In macOS Sonoma, three finger drag must be enabled in System Settings > Accessibility > Pointer Control > Trackpad Options\n"
+    print_in_yellow "Note: In macOS Sonoma, three finger drag must be enabled in System Settings > Accessibility > Pointer Control > Trackpad Options
+"
     execute "defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerDrag -bool true" \
         "Enable three finger drag (may require manual configuration in System Settings)"
     execute "defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerDrag -bool true" \
@@ -104,7 +119,8 @@ execute "defaults write com.apple.AppleMultitouchTrackpad TrackpadFiveFingerPinc
 
 # Configure trackpad corner settings
 if [[ $MACOS_MAJOR_VERSION -ge 14 ]]; then
-    print_in_yellow "Note: In macOS Sonoma, trackpad corner settings may need to be configured in System Settings\n"
+    print_in_yellow "Note: In macOS Sonoma, trackpad corner settings may need to be configured in System Settings
+"
 else
     execute "defaults write com.apple.AppleMultitouchTrackpad TrackpadCornerSecondaryClick -int 2" \
         "Set bottom right corner to right-click"

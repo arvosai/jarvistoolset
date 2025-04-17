@@ -4,10 +4,12 @@
 SCRIPT_DIR=${0:a:h} \
     source "../../utils.zsh"
 
-print_in_purple "\n   Communication and Messaging Tools\n\n"
+print_in_purple "
+   Communication and Messaging Tools
+
+"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 # Define arrays for each category
 team_collab=(
     "slack:Slack"
@@ -92,14 +94,16 @@ display_menu() {
     local options=("$@")
     local selected=()
     
-    echo "\n$title:"
+    echo "
+$title:"
     for i in "${!options[@]}"; do
         local item="${options[$i]}"
         local name="${item#*:}"
         echo "   $((i+1))) $name"
     done
     
-    echo "\nEnter numbers (space-separated) or 'all' for all options:"
+    echo "
+Enter numbers (space-separated) or 'all' for all options:"
     read -r choices
     
     if [[ "$choices" == "all" ]]; then
@@ -126,12 +130,15 @@ install_tools() {
 }
 
 # Main installation logic
-print_in_purple "\nDo you want to install all communication tools or select individually? (all/select): "
+print_in_purple "
+Do you want to install all communication tools or select individually? (all/select): "
 read -r install_choice
 
 if [[ "$install_choice" == "all" ]]; then
     # Install all tools
-    print_in_purple "\nInstalling all communication tools...\n"
+    print_in_purple "
+Installing all communication tools...
+"
     install_tools "${team_collab[@]}"
     install_tools "${messaging[@]}"
     install_tools "${video_comm[@]}"
@@ -143,43 +150,56 @@ if [[ "$install_choice" == "all" ]]; then
     install_tools "${comm_enhancement[@]}"
 else
     # Show category selection menu
-    print_in_purple "\nSelect tools by category:\n"
+    print_in_purple "
+Select tools by category:
+"
     
-    print_in_purple "\n1. Team Collaboration Tools"
+    print_in_purple "
+1. Team Collaboration Tools"
     selected=$(display_menu "Team Collaboration" "${team_collab[@]}")
     [ ! -z "$selected" ] && install_tools $selected
     
-    print_in_purple "\n2. Messaging Apps"
+    print_in_purple "
+2. Messaging Apps"
     selected=$(display_menu "Messaging Apps" "${messaging[@]}")
     [ ! -z "$selected" ] && install_tools $selected
     
-    print_in_purple "\n3. Video Communication"
+    print_in_purple "
+3. Video Communication"
     selected=$(display_menu "Video Communication" "${video_comm[@]}")
     [ ! -z "$selected" ] && install_tools $selected
     
-    print_in_purple "\n4. Email Clients"
+    print_in_purple "
+4. Email Clients"
     selected=$(display_menu "Email Clients" "${email_clients[@]}")
     [ ! -z "$selected" ] && install_tools $selected
     
-    print_in_purple "\n5. Voice and VOIP"
+    print_in_purple "
+5. Voice and VOIP"
     selected=$(display_menu "Voice and VOIP" "${voice_voip[@]}")
     [ ! -z "$selected" ] && install_tools $selected
     
-    print_in_purple "\n6. Remote Desktop"
+    print_in_purple "
+6. Remote Desktop"
     selected=$(display_menu "Remote Desktop" "${remote_desktop[@]}")
     [ ! -z "$selected" ] && install_tools $selected
     
-    print_in_purple "\n7. Screen Sharing"
+    print_in_purple "
+7. Screen Sharing"
     selected=$(display_menu "Screen Sharing" "${screen_sharing[@]}")
     [ ! -z "$selected" ] && install_tools $selected
     
-    print_in_purple "\n8. Project Management"
+    print_in_purple "
+8. Project Management"
     selected=$(display_menu "Project Management" "${project_mgmt[@]}")
     [ ! -z "$selected" ] && install_tools $selected
     
-    print_in_purple "\n9. Communication Enhancement"
+    print_in_purple "
+9. Communication Enhancement"
     selected=$(display_menu "Communication Enhancement" "${comm_enhancement[@]}")
     [ ! -z "$selected" ] && install_tools $selected
 fi
 
-print_in_purple "\nCommunication tools installation completed!\n"
+print_in_purple "
+Communication tools installation completed!
+"

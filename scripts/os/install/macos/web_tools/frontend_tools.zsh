@@ -4,10 +4,12 @@
 SCRIPT_DIR=${0:a:h} \
     source "../../utils.zsh"
 
-print_in_purple "\n   Frontend Development Tools\n\n"
+print_in_purple "
+   Frontend Development Tools
+
+"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 # Node.js and Package Managers
 execute "brew install node" \
     "Installing Node.js"

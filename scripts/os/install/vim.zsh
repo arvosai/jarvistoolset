@@ -6,6 +6,20 @@ source "${SCRIPT_DIR}/../utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+# Create framed header with script details and tools list
+create_framed_header "$0" "Installs and configures vim tools" No specific tools identified in script
+
+
+# Create framed header with script details and tools list
+
+
+# Create framed header with script details and tools list
+
+
+# Create a banner for this installation script
+create_install_banner "$0"
+
+
 install_plugins() {
     local -r VUNDLE_DIR="$HOME/.vim/plugins/Vundle.vim"
     local -r VUNDLE_GIT_REPO_URL="https://github.com/VundleVim/Vundle.vim.git"
@@ -14,7 +28,8 @@ install_plugins() {
     execute \
         "rm -rf '$VUNDLE_DIR' \
             && git clone --quiet '$VUNDLE_GIT_REPO_URL' '$VUNDLE_DIR' \
-            && printf '\n' | vim +PluginInstall +qall" \
+            && printf '
+' | vim +PluginInstall +qall" \
         "Install vim plugins"
 
     # Install additional things required by some plugins.
@@ -34,7 +49,10 @@ update_plugins() {
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 main() {
-    print_in_purple "\n   Vim\n\n"
+    print_in_purple "
+   Vim
+
+"
 
     # Install vim if not already installed
     brew_install "vim"

@@ -6,11 +6,23 @@ source "${SCRIPT_DIR}/utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+# Create framed header with script details and tools list
+create_framed_header "$0" "Installs and configures create_local_config_files tools" No specific tools identified in script
+
+
+# Create framed header with script details and tools list
+
+
+# Create framed header with script details and tools list
+
+
 create_zsh_local() {
     local FILE_PATH="$HOME/.zsh.local"
 
     if [[ ! -e "$FILE_PATH" ]] || [[ -z "$FILE_PATH" ]]; then
-        printf "%s\n\n" "#!/usr/bin/env zsh" >> "$FILE_PATH"
+        printf "%s
+
+" "#!/usr/bin/env zsh" >> "$FILE_PATH"
     fi
 
     print_result $? "$FILE_PATH"
@@ -64,7 +76,10 @@ EOL
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 main() {
-    print_in_purple "\n >> Create local config files\n\n"
+    print_in_purple "
+ >> Create local config files
+
+"
     
     create_zsh_local
     create_gitconfig_local

@@ -6,7 +6,6 @@ SCRIPT_DIR=${0:a:h} \
     source "./utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 install_yarn() {
 
     if ! cmd_exists "yarn"; then
@@ -44,10 +43,12 @@ install_yarn_package() {
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 main() {
 
-    print_in_purple "\n   Yarn\n\n"
+    print_in_purple "
+   Yarn
+
+"
 
     install_yarn
     install_yarn_packages

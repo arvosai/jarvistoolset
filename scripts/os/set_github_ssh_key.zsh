@@ -5,9 +5,20 @@ cd "$(dirname "${(%):-%x}")" \
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+# Create framed header with script details and tools list
+create_framed_header "$0" "Installs and configures set_github_ssh_key tools" No specific tools identified in script
+
+
+# Create framed header with script details and tools list
+
+
+# Create framed header with script details and tools list
+
+
 add_ssh_configs() {
 
-    printf "%s\n" \
+    printf "%s
+" \
         "Host github.com" \
         "  IdentityFile ${1}" \
         "  LogLevel ERROR" >> ~/.ssh/config
@@ -36,7 +47,8 @@ copy_public_ssh_key_to_clipboard () {
 
 generate_ssh_keys() {
 
-    ask "Enter your email: " && printf "\n"
+    ask "Enter your email: " && printf "
+"
     ssh-keygen -t rsa -b 4096 -C "$(get_answer)" -f "$1"
 
     print_result $? "Generating SSH keys..."
@@ -101,7 +113,10 @@ test_ssh_connection() {
 
 main() {
 
-    print_in_purple "\n >> Configuring SSH keys on GitHub\n\n"
+    print_in_purple "
+ >> Configuring SSH keys on GitHub
+
+"
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

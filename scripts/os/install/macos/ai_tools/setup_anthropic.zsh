@@ -7,7 +7,10 @@
 SCRIPT_DIR=${0:a:h}
 source "${SCRIPT_DIR}/utils.zsh"
 
-print_in_purple "\n   Setting up Anthropic MCP Environment\n\n"
+print_in_purple "
+   Setting up Anthropic MCP Environment
+
+"
 
 # Create virtual environment for Anthropic tools
 execute "python3 -m venv $HOME/.anthropic-env" \
@@ -138,10 +141,22 @@ chmod +x "$HOME/.anthropic/mcp/examples/client_example.py"
 # Deactivate virtual environment
 deactivate
 
-print_in_green "\n   Anthropic MCP Environment Setup Complete!\n\n"
-print_in_yellow "   To activate the Anthropic environment, run:\n"
-print_in_yellow "   source $HOME/.anthropic-env/bin/activate\n\n"
-print_in_yellow "   To start the MCP Server example, run:\n"
-print_in_yellow "   $HOME/.anthropic/mcp/examples/server_example.py\n\n"
-print_in_yellow "   To run the MCP Client example, run:\n"
-print_in_yellow "   $HOME/.anthropic/mcp/examples/client_example.py\n\n"
+print_in_green "
+   Anthropic MCP Environment Setup Complete!
+
+"
+print_in_yellow "   To activate the Anthropic environment, run:
+"
+print_in_yellow "   source $HOME/.anthropic-env/bin/activate
+
+"
+print_in_yellow "   To start the MCP Server example, run:
+"
+print_in_yellow "   $HOME/.anthropic/mcp/examples/server_example.py
+
+"
+print_in_yellow "   To run the MCP Client example, run:
+"
+print_in_yellow "   $HOME/.anthropic/mcp/examples/client_example.py
+
+"

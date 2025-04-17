@@ -6,8 +6,10 @@ source "${SCRIPT_DIR}/../../utils.zsh"
 source "${SCRIPT_DIR}/utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+print_in_purple "
+ >> Installing Media Tools
 
-print_in_purple "\n >> Installing Media Tools\n\n"
+"
 
 # Install VLC
 if brew_install "VLC" "vlc" "--cask"; then
@@ -34,4 +36,7 @@ if brew_install "ImageMagick" "imagemagick"; then
     print_success "ImageMagick installed"
 fi
 
-print_in_purple "\n >> Media Tools installation completed\n\n"
+print_in_purple "
+ >> Media Tools installation completed
+
+"

@@ -8,6 +8,16 @@ source "${SCRIPT_DIR}/logging.zsh" 2>/dev/null || true
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+# Create framed header with script details and tools list
+create_framed_header "$0" "Installs and configures setup tools" No specific tools identified in script
+
+
+# Create framed header with script details and tools list
+
+
+# Create framed header with script details and tools list
+
+
 # Repository configuration
 typeset -r GITHUB_REPOSITORY="arvosai/jarvistoolset"
 typeset -r JARVIS_ORIGIN="git@github.com:$GITHUB_REPOSITORY.git"
@@ -125,7 +135,8 @@ verify_os() {
         fi
         return 0
     else
-        printf "Sorry, this script is intended only for macOS.\n"
+        printf "Sorry, this script is intended only for macOS.
+"
         if type log_error &>/dev/null; then
             log_error "Operating system verification failed: $os_name is not supported"
         fi
@@ -135,7 +146,10 @@ verify_os() {
 
 install_homebrew() {
     if ! (( $+commands[brew] )); then
-        print_in_purple "\n >> Installing Homebrew\n\n"
+        print_in_purple "
+ >> Installing Homebrew
+
+"
         
         if type log_info &>/dev/null; then
             log_info "Installing Homebrew"
@@ -212,7 +226,10 @@ install_figlet() {
 
 install_git() {
     if ! (( $+commands[git] )); then
-        print_in_purple "\n >> Installing Git\n\n"
+        print_in_purple "
+ >> Installing Git
+
+"
         
         if type log_info &>/dev/null; then
             log_info "Installing Git"
@@ -261,16 +278,22 @@ install_git() {
 
 display_banner() {
     if (( $+commands[figlet] )); then
-        print_in_yellow "$(figlet -f ogre -c 'Jarvis Toolset')\n"
-        print_in_yellow "Welcome to ARVOS.AI Jarvis Toolset 25H1 Edition, the complete Mac OS tools and apps installer for AI and Vibe Coders!\n"
-        print_in_yellow "Copyright (c) 2025 ARVOS.AI. All rights reserved.\n"
+        print_in_yellow "$(figlet -f ogre -c 'Jarvis Toolset')
+"
+        print_in_yellow "Welcome to ARVOS.AI Jarvis Toolset 25H1 Edition, the complete Mac OS tools and apps installer for AI and Vibe Coders!
+"
+        print_in_yellow "Copyright (c) 2025 ARVOS.AI. All rights reserved.
+"
         
         if type log_info &>/dev/null; then
             log_info "Displayed Jarvis Toolset banner with figlet"
         fi
     else
-        print_in_yellow "\n >> Welcome to ARVOS.AI Jarvis Toolset 25H1 Edition, the complete Mac OS tools and apps installer for AI and Vibe Coders!\n"
-        print_in_yellow "Copyright (c) 2025 ARVOS.AI. All rights reserved.\n"
+        print_in_yellow "
+ >> Welcome to ARVOS.AI Jarvis Toolset 25H1 Edition, the complete Mac OS tools and apps installer for AI and Vibe Coders!
+"
+        print_in_yellow "Copyright (c) 2025 ARVOS.AI. All rights reserved.
+"
         
         if type log_info &>/dev/null; then
             log_info "Displayed Jarvis Toolset banner (figlet not available)"
@@ -282,10 +305,18 @@ display_banner() {
 select_script_groups() {
     local answer
     
-    print_in_purple "\n >> Installation Options\n\n"
-    print_in_yellow "Would you like to install the complete toolset or select specific groups?\n\n"
-    print_in_yellow "1) Install complete toolset (all groups)\n"
-    print_in_yellow "2) Select specific groups to install\n\n"
+    print_in_purple "
+ >> Installation Options
+
+"
+    print_in_yellow "Would you like to install the complete toolset or select specific groups?
+
+"
+    print_in_yellow "1) Install complete toolset (all groups)
+"
+    print_in_yellow "2) Select specific groups to install
+
+"
     
     answer=""
     vared -p $'Enter your choice (1/2): ' answer
@@ -296,7 +327,10 @@ select_script_groups() {
             SELECTED_GROUPS[$group]="false"
         done
         
-        print_in_purple "\n >> Available groups to install\n\n"
+        print_in_purple "
+ >> Available groups to install
+
+"
 
         for group in ${(k)SCRIPT_GROUPS}; do
             local group_answer=""
@@ -311,25 +345,40 @@ select_script_groups() {
         done
         
         # Summary of selected groups
-        print_in_purple "\n >> Installation Summary\n\n"
+        print_in_purple "
+ >> Installation Summary
+
+"
         for group in ${(k)SCRIPT_GROUPS}; do
             if [[ "${SELECTED_GROUPS[$group]}" == "true" ]]; then
-                print_in_green "Will install: ${SCRIPT_GROUPS[$group]}\n"
+                print_in_green "Will install: ${SCRIPT_GROUPS[$group]}
+"
             else
-                print_in_red   "Will skip...: ${SCRIPT_GROUPS[$group]}\n"
+                print_in_red   "Will skip...: ${SCRIPT_GROUPS[$group]}
+"
             fi
         done
         
         # Confirmation
         local confirm_answer=""
-        vared -p $'\n\n >> Proceed with installation? (y/n): ' confirm_answer
+        vared -p $'
+
+ >> Proceed with installation? (y/n): ' confirm_answer
         
         if [[ ! "$confirm_answer" =~ ^[Yy]$ ]]; then
-            print_in_red "\n\n** Installation cancelled by user!!\n\n"
+            print_in_red "
+
+** Installation cancelled by user!!
+
+"
             exit 0
         fi
     else
-        print_in_green "\n\nInstalling complete toolset (all groups).\n\n"
+        print_in_green "
+
+Installing complete toolset (all groups).
+
+"
     fi
 }
 
@@ -340,7 +389,9 @@ update_configuration() {
     vared -p $'Would you like to update this configuration? (y/n): ' update_config
     
     if [[ "$update_config" =~ ^[Yy]$ ]]; then
-        print_in_yellow "\nEnter new values (or press Enter to keep current value):\n"
+        print_in_yellow "
+Enter new values (or press Enter to keep current value):
+"
         
         # Update hostname
         local new_hostname=""
@@ -375,15 +426,24 @@ update_configuration() {
         fi
         
         # Display updated configuration
-        print_in_green "\n >> Updated configuration:\n"
-        print_in_green "---------------------------------------------------------------\n"
-        print_in_green "Hostname: $HOSTNAME\n"
-        print_in_green "Username : $USERNAME\n"
-        print_in_green "Email    : $EMAIL\n"
-        print_in_green "Directory: $DIRECTORY\n"
-        print_in_green "---------------------------------------------------------------\n"
+        print_in_green "
+ >> Updated configuration:
+"
+        print_in_green "---------------------------------------------------------------
+"
+        print_in_green "Hostname: $HOSTNAME
+"
+        print_in_green "Username : $USERNAME
+"
+        print_in_green "Email    : $EMAIL
+"
+        print_in_green "Directory: $DIRECTORY
+"
+        print_in_green "---------------------------------------------------------------
+"
     else
-        print_in_yellow "Continuing with current configuration.\n"
+        print_in_yellow "Continuing with current configuration.
+"
     fi
 }
 
@@ -409,7 +469,10 @@ main() {
     display_banner
     
     # Ask for sudo password upfront and keep sudo credentials alive
-    print_in_purple "\n >> Requesting administrator privileges...\n\n"
+    print_in_purple "
+ >> Requesting administrator privileges...
+
+"
     ask_for_sudo
 
     # Create a sudo timestamp directory with appropriate permissions
@@ -434,13 +497,21 @@ main() {
     setup_sudo_timestamp_dir
 
     # Display information about what's happening
-    print_in_green "\n >> Starting Jarvis Toolset with the following configuration:\n"
-    print_in_green "---------------------------------------------------------------\n"
-    print_in_green "Hostname : $HOSTNAME\n"
-    print_in_green "Username : $USERNAME\n"
-    print_in_green "Email    : $EMAIL\n"
-    print_in_green "Directory: $DIRECTORY\n"
-    print_in_green "---------------------------------------------------------------\n"
+    print_in_green "
+ >> Starting Jarvis Toolset with the following configuration:
+"
+    print_in_green "---------------------------------------------------------------
+"
+    print_in_green "Hostname : $HOSTNAME
+"
+    print_in_green "Username : $USERNAME
+"
+    print_in_green "Email    : $EMAIL
+"
+    print_in_green "Directory: $DIRECTORY
+"
+    print_in_green "---------------------------------------------------------------
+"
     
     # Ask if user wants to update configuration
     update_configuration
@@ -478,7 +549,10 @@ main() {
         "$EMAIL" \
         "$DIRECTORY"
 
-    print_in_purple "\n >> Setup completed! Please restart your terminal.\n\n"
+    print_in_purple "
+ >> Setup completed! Please restart your terminal.
+
+"
 }
 
 main "$@"

@@ -4,10 +4,12 @@
 SCRIPT_DIR=${0:a:h} \
     source "../../utils.zsh"
 
-print_in_purple "\n   Oracle AI Tools\n\n"
+print_in_purple "
+   Oracle AI Tools
+
+"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 # Core Oracle AI
 execute "pip3 install oci-ai" \
     "Installing Oracle Cloud AI"

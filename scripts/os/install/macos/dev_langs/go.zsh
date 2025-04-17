@@ -5,8 +5,10 @@ SCRIPT_DIR=${0:a:h}
 source "${SCRIPT_DIR}/../../../utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+print_in_purple "
+   Go
 
-print_in_purple "\n   Go\n\n"
+"
 
 brew_install "Go" "go"
 
@@ -117,7 +119,10 @@ mkdir -p "$HOME/go/bin"
 mkdir -p "$HOME/go/pkg"
 
 # Install Go tools
-print_in_purple "\n   Installing Go Tools\n\n"
+print_in_purple "
+   Installing Go Tools
+
+"
 
 # Setup GOROOT and GOPATH for Go tools
 export GOROOT="$(brew --prefix go)/libexec"
@@ -159,4 +164,6 @@ go_install "github.com/uudashr/gopkgs/v2/cmd/gopkgs" "Go Packages" "gopkgs"
 # Create modular configuration
 create_go_config
 
-print_in_green "\n  Go development environment setup complete!\n"
+print_in_green "
+  Go development environment setup complete!
+"

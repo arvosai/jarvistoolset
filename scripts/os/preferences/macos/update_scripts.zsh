@@ -7,7 +7,10 @@
 SCRIPT_DIR=${0:a:h}
 source "${SCRIPT_DIR}/../../utils.zsh"
 
-print_in_purple "\n >> Updating macOS preference scripts with version compatibility checks\n\n"
+print_in_purple "
+ >> Updating macOS preference scripts with version compatibility checks
+
+"
 
 # List of scripts to update (excluding main.zsh, dock.zsh, finder.zsh, and template.zsh which are already updated)
 SCRIPTS=(
@@ -62,7 +65,8 @@ check_macos_compatibility() {
     
     if ! is_supported_version "$current_version" "$MINIMUM_MACOS_VERSION"; then
         print_error "Your macOS version ($current_version) is not supported for these preferences"
-        print_in_yellow "Please upgrade to macOS Sonoma ($MINIMUM_MACOS_VERSION) or later.\n"
+        print_in_yellow "Please upgrade to macOS Sonoma ($MINIMUM_MACOS_VERSION) or later.
+"
         return 1
     fi
     
@@ -83,7 +87,8 @@ EOT
 # Update each script
 for script in "${SCRIPTS[@]}"; do
     if [[ -f "$SCRIPT_DIR/$script" ]]; then
-        print_in_yellow "Updating $script...\n"
+        print_in_yellow "Updating $script...
+"
         
         # Create a temporary file
         TEMP_FILE=$(mktemp)
@@ -114,5 +119,9 @@ for script in "${SCRIPTS[@]}"; do
     fi
 done
 
-print_in_purple "\n >> All preference scripts have been updated with version compatibility checks\n\n"
-print_in_yellow "Note: You may need to review each script for specific version-dependent settings.\n"
+print_in_purple "
+ >> All preference scripts have been updated with version compatibility checks
+
+"
+print_in_yellow "Note: You may need to review each script for specific version-dependent settings.
+"

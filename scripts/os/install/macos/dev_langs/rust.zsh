@@ -6,17 +6,23 @@ source "${SCRIPT_DIR}/../../../utils.zsh"
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 # Add warning function if not already defined
 print_warning() {
-    print_in_yellow "  [!] $1\n"
+    print_in_yellow "  [!] $1
+"
 }
 
-print_in_purple "\n   Rust Development Tools\n\n"
+print_in_purple "
+   Rust Development Tools
+
+"
 
 # Install Rust using rustup
 if ! command -v rustup &> /dev/null; then
-    print_in_purple "\n   Installing Rust\n\n"
+    print_in_purple "
+   Installing Rust
+
+"
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y &> /dev/null
     print_result $? "Rustup"
     
@@ -129,7 +135,10 @@ EOL
 }
 
 # Install Rust tools
-print_in_purple "\n   Installing Rust Tools\n\n"
+print_in_purple "
+   Installing Rust Tools
+
+"
 
 # Install essential Rust tools
 cargo_install() {
@@ -185,4 +194,6 @@ EOL
     print_result $? "Added Rust configuration to .zshrc"
 fi
 
-print_in_green "\n  Rust development environment setup complete!\n"
+print_in_green "
+  Rust development environment setup complete!
+"

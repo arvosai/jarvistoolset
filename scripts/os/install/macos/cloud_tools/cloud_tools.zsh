@@ -4,10 +4,12 @@
 SCRIPT_DIR=${0:a:h}
 source "${SCRIPT_DIR}/utils.zsh"
 
-print_in_purple "\n   Cloud Service Provider Tools\n\n"
+print_in_purple "
+   Cloud Service Provider Tools
+
+"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 # Amazon Web Services (AWS)
 brew_install "awscli" "Installing AWS CLI" false
 

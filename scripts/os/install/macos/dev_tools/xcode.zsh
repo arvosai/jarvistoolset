@@ -6,6 +6,9 @@ source "${SCRIPT_DIR}/../../../../../scripts/os/utils.zsh"
 source "${SCRIPT_DIR}/../utils.zsh" 2>/dev/null || true  # Source local utils if available
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Create a banner for this installation script
+create_install_banner "$0"
+
 
 agree_with_xcode_licence() {
 
@@ -266,10 +269,11 @@ EOL
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 main() {
 
-    print_in_purple "   Xcode\n\n"
+    print_in_purple "   Xcode
+
+"
 
     install_xcode_command_line_tools
     install_xcode
@@ -289,7 +293,9 @@ EOL
         print_result $? "Added Xcode configuration to .zshrc"
     fi
     
-    print_in_green "\n  Xcode setup complete!\n"
+    print_in_green "
+  Xcode setup complete!
+"
 }
 
 main

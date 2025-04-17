@@ -6,6 +6,16 @@ source "${SCRIPT_DIR}/../../utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+# Create framed header with script details and tools list
+create_framed_header "$0" "Installs and configures security tools" No specific tools identified in script
+
+
+# Create framed header with script details and tools list
+
+
+# Create framed header with script details and tools list
+
+
 # Minimum supported macOS version for this script
 MINIMUM_MACOS_VERSION="14.0.0"  # macOS Sonoma
 
@@ -15,7 +25,8 @@ check_macos_compatibility() {
     
     if ! is_supported_version "$current_version" "$MINIMUM_MACOS_VERSION"; then
         print_error "Your macOS version ($current_version) is not supported for Security preferences"
-        print_in_yellow "Please upgrade to macOS Sonoma ($MINIMUM_MACOS_VERSION) or later.\n"
+        print_in_yellow "Please upgrade to macOS Sonoma ($MINIMUM_MACOS_VERSION) or later.
+"
         return 1
     fi
     
@@ -30,18 +41,25 @@ fi
 # Get macOS major version for version-specific settings
 MACOS_MAJOR_VERSION=$(sw_vers -productVersion | cut -d. -f1)
 
-print_in_purple "\n   Security\n\n"
+print_in_purple "
+   Security
+
+"
 
 # Ensure sudo is available for privileged operations
 sudo_is_active
 
 # General Security Settings
-print_in_yellow "\n >> Configuring General Security Settings\n"
+print_in_yellow "
+ >> Configuring General Security Settings
+"
 
 # Enable FileVault if not already enabled
 if ! fdesetup isactive >/dev/null; then
-    print_in_yellow "FileVault is not enabled. It's recommended to enable it via System Settings > Privacy & Security.\n"
-    print_in_yellow "This script will not automatically enable FileVault as it requires user interaction.\n"
+    print_in_yellow "FileVault is not enabled. It's recommended to enable it via System Settings > Privacy & Security.
+"
+    print_in_yellow "This script will not automatically enable FileVault as it requires user interaction.
+"
 else
     print_success "FileVault is already enabled"
 fi
@@ -82,7 +100,9 @@ execute "sudo defaults write /Library/Preferences/com.apple.mDNSResponder.plist 
     "Disable Bonjour multicast advertising"
 
 # Application Security Settings
-print_in_yellow "\n >> Configuring Application Security Settings\n"
+print_in_yellow "
+ >> Configuring Application Security Settings
+"
 
 # Enable Gatekeeper
 execute "sudo spctl --master-enable" \
@@ -99,7 +119,9 @@ else
 fi
 
 # Safari Security Settings
-print_in_yellow "\n >> Configuring Safari Security Settings\n"
+print_in_yellow "
+ >> Configuring Safari Security Settings
+"
 
 # Disable Safari's thumbnail cache for History and Top Sites
 execute "defaults write com.apple.Safari DebugSnapshotsUpdatePolicy -int 2" \
@@ -150,7 +172,9 @@ execute "defaults write com.apple.Safari InstallExtensionUpdatesAutomatically -b
     "Update Safari extensions automatically"
 
 # Privacy Settings
-print_in_yellow "\n >> Configuring Privacy Settings\n"
+print_in_yellow "
+ >> Configuring Privacy Settings
+"
 
 # Disable sending Safari search queries to Apple
 execute "defaults write com.apple.Safari UniversalSearchEnabled -bool false" \
@@ -161,7 +185,8 @@ execute "defaults write com.apple.Safari SuppressSearchSuggestions -bool true" \
 
 # Disable analytics data submission
 if [[ $MACOS_MAJOR_VERSION -ge 14 ]]; then
-    print_in_yellow "Note: In macOS Sonoma, analytics settings are managed in System Settings > Privacy & Security > Analytics & Improvements\n"
+    print_in_yellow "Note: In macOS Sonoma, analytics settings are managed in System Settings > Privacy & Security > Analytics & Improvements
+"
 else
     execute "defaults write /Library/Application\ Support/CrashReporter/DiagnosticMessagesHistory.plist AutoSubmit -bool false" \
         "Disable automatic submission of diagnostic reports"
@@ -175,7 +200,9 @@ execute "defaults write com.apple.safari.spotlighthelper LocationServicesEnabled
     "Disable location services for Spotlight suggestions"
 
 # Network Security
-print_in_yellow "\n >> Configuring Network Security Settings\n"
+print_in_yellow "
+ >> Configuring Network Security Settings
+"
 
 # Disable wake on network access
 execute "sudo pmset -a womp 0" \
@@ -205,7 +232,9 @@ execute "defaults write /Library/Preferences/SystemConfiguration/com.apple.airpo
     "Set WiFi join mode to Preferred"
 
 # Time Machine Security
-print_in_yellow "\n >> Configuring Time Machine Security Settings\n"
+print_in_yellow "
+ >> Configuring Time Machine Security Settings
+"
 
 # Disable Time Machine prompts to use new hard drives as backup volume
 execute "defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true" \
@@ -216,7 +245,9 @@ execute "sudo tmutil disablelocal" \
     "Disable local Time Machine backups"
 
 # Restart affected services
-print_in_yellow "\n >> Applying changes and restarting services\n"
+print_in_yellow "
+ >> Applying changes and restarting services
+"
 
 execute "killall Finder" \
     "Restart Finder"
@@ -225,5 +256,7 @@ execute "killall SystemUIServer" \
     "Restart SystemUIServer"
 
 print_success "Security preferences have been configured"
-print_in_yellow "Note: Some security settings may require a system restart to take effect.\n"
-print_in_yellow "Note: Some settings may need to be manually configured in System Settings > Privacy & Security.\n"
+print_in_yellow "Note: Some security settings may require a system restart to take effect.
+"
+print_in_yellow "Note: Some settings may need to be manually configured in System Settings > Privacy & Security.
+"

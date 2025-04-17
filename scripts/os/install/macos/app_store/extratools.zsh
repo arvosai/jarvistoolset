@@ -6,8 +6,10 @@ source "${SCRIPT_DIR}/../../utils.zsh"
 source "${SCRIPT_DIR}/utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+print_in_purple "
+   Extra Tools
 
-print_in_purple "\n   Extra Tools\n\n"
+"
 
 # Productivity Tools
 brew_install "Alfred" "alfred" "--cask"

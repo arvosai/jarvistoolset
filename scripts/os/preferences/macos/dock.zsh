@@ -6,6 +6,16 @@ source "${SCRIPT_DIR}/../../utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+# Create framed header with script details and tools list
+create_framed_header "$0" "Installs and configures dock tools" No specific tools identified in script
+
+
+# Create framed header with script details and tools list
+
+
+# Create framed header with script details and tools list
+
+
 # Minimum supported macOS version for this script
 MINIMUM_MACOS_VERSION="14.0.0"  # macOS Sonoma
 
@@ -15,7 +25,8 @@ check_macos_compatibility() {
     
     if ! is_supported_version "$current_version" "$MINIMUM_MACOS_VERSION"; then
         print_error "Your macOS version ($current_version) is not supported for Dock preferences"
-        print_in_yellow "Please upgrade to macOS Sonoma ($MINIMUM_MACOS_VERSION) or later.\n"
+        print_in_yellow "Please upgrade to macOS Sonoma ($MINIMUM_MACOS_VERSION) or later.
+"
         return 1
     fi
     
@@ -27,7 +38,10 @@ if ! check_macos_compatibility; then
     exit 1
 fi
 
-print_in_purple "\n   Dock\n\n"
+print_in_purple "
+   Dock
+
+"
 
 # Dock Appearance
 execute "defaults write com.apple.dock autohide -bool true" \
@@ -87,7 +101,8 @@ execute "defaults write com.apple.dock enable-spring-load-actions-on-all-items -
 
 # Modern macOS uses persistent-apps differently - clear with caution
 if [[ $(sw_vers -productVersion | cut -d. -f1) -ge 14 ]]; then
-    print_in_yellow "Note: Not removing persistent apps from Dock on macOS Sonoma or later\n"
+    print_in_yellow "Note: Not removing persistent apps from Dock on macOS Sonoma or later
+"
 else
     execute "defaults write com.apple.dock persistent-apps -array" \
         "Remove all persistent apps from Dock"
@@ -95,7 +110,8 @@ fi
 
 # This setting might not work as expected in newer macOS versions
 if [[ $(sw_vers -productVersion | cut -d. -f1) -ge 14 ]]; then
-    print_in_yellow "Note: 'Show only active applications' may not work as expected in macOS Sonoma or later\n"
+    print_in_yellow "Note: 'Show only active applications' may not work as expected in macOS Sonoma or later
+"
 else
     execute "defaults write com.apple.dock static-only -bool true" \
         "Show only active applications in Dock"
@@ -126,7 +142,8 @@ if [[ $(sw_vers -productVersion | cut -d. -f1) -lt 11 ]]; then
     execute "defaults write com.apple.dock dashboard-in-overlay -bool true" \
         "Don't show Dashboard as a Space"
 else
-    print_in_yellow "Note: Dashboard is no longer available in macOS Catalina and later\n"
+    print_in_yellow "Note: Dashboard is no longer available in macOS Catalina and later
+"
 fi
 
 execute "defaults write com.apple.dock expose-group-by-app -bool false" \

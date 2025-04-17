@@ -4,10 +4,12 @@
 SCRIPT_DIR=${0:a:h}
 source "${SCRIPT_DIR}/utils.zsh"
 
-print_in_purple "\n   Cybersecurity Tools\n\n"
+print_in_purple "
+   Cybersecurity Tools
+
+"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 # Network Security Tools
 brew_install "nmap" "Installing Nmap" false
 

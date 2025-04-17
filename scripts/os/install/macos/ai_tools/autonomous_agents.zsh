@@ -4,10 +4,12 @@
 SCRIPT_DIR=${0:a:h}
 source "${SCRIPT_DIR}/utils.zsh"
 
-print_in_purple "\n   Autonomous Agents Tools\n\n"
+print_in_purple "
+   Autonomous Agents Tools
+
+"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 # LangChain - Framework for developing context-aware reasoning applications
 execute "pip3 install langchain" \
     "Installing LangChain"

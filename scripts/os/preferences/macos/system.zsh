@@ -6,6 +6,16 @@ source "${SCRIPT_DIR}/../../utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+# Create framed header with script details and tools list
+create_framed_header "$0" "Installs and configures system tools" No specific tools identified in script
+
+
+# Create framed header with script details and tools list
+
+
+# Create framed header with script details and tools list
+
+
 # Minimum supported macOS version for this script
 MINIMUM_MACOS_VERSION="14.0.0"  # macOS Sonoma
 
@@ -15,7 +25,8 @@ check_macos_compatibility() {
     
     if ! is_supported_version "$current_version" "$MINIMUM_MACOS_VERSION"; then
         print_error "Your macOS version ($current_version) is not supported for System preferences"
-        print_in_yellow "Please upgrade to macOS Sonoma ($MINIMUM_MACOS_VERSION) or later.\n"
+        print_in_yellow "Please upgrade to macOS Sonoma ($MINIMUM_MACOS_VERSION) or later.
+"
         return 1
     fi
     
@@ -30,13 +41,18 @@ fi
 # Get macOS major version for version-specific settings
 MACOS_MAJOR_VERSION=$(sw_vers -productVersion | cut -d. -f1)
 
-print_in_purple "\n   System\n\n"
+print_in_purple "
+   System
+
+"
 
 # Ensure sudo is available for privileged operations
 sudo_is_active
 
 # General System Settings
-print_in_yellow "\n >> Configuring General System Settings\n"
+print_in_yellow "
+ >> Configuring General System Settings
+"
 
 # Set computer name (as done via System Preferences → Sharing)
 COMPUTER_NAME="jarvis-mac"
@@ -107,8 +123,10 @@ if [[ $MACOS_MAJOR_VERSION -lt 14 ]]; then
     execute "launchctl unload -w /System/Library/LaunchAgents/com.apple.notificationcenterui.plist 2> /dev/null" \
         "Disable Notification Center (pre-Sonoma)"
 else
-    print_in_yellow "Note: In macOS Sonoma, Notification Center cannot be completely disabled via command line\n"
-    print_in_yellow "Configure notification settings in System Settings > Notifications\n"
+    print_in_yellow "Note: In macOS Sonoma, Notification Center cannot be completely disabled via command line
+"
+    print_in_yellow "Configure notification settings in System Settings > Notifications
+"
 fi
 
 # Disable automatic capitalization
@@ -132,7 +150,9 @@ execute "defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -boo
     "Disable auto-correct"
 
 # Power Management Settings
-print_in_yellow "\n >> Configuring Power Management Settings\n"
+print_in_yellow "
+ >> Configuring Power Management Settings
+"
 
 # Sleep settings
 execute "sudo pmset -a displaysleep 15" \
@@ -158,7 +178,9 @@ execute "sudo pmset -a hibernatemode 3" \
     "Set hibernatemode to 3 (safe sleep)"
 
 # Performance Settings
-print_in_yellow "\n >> Configuring Performance Settings\n"
+print_in_yellow "
+ >> Configuring Performance Settings
+"
 
 # Disable sudden motion sensor (not needed for SSDs)
 execute "sudo pmset -a sms 0" \
@@ -185,7 +207,9 @@ execute "sudo pmset -a sms 0" \
     "Disable motion sensor"
 
 # System UI Settings
-print_in_yellow "\n >> Configuring System UI Settings\n"
+print_in_yellow "
+ >> Configuring System UI Settings
+"
 
 # Menu bar: show battery percentage
 execute "defaults write com.apple.menuextra.battery ShowPercent -string 'YES'" \
@@ -193,7 +217,8 @@ execute "defaults write com.apple.menuextra.battery ShowPercent -string 'YES'" \
 
 # Menu bar: hide the Time Machine, Volume, and User icons
 if [[ $MACOS_MAJOR_VERSION -ge 14 ]]; then
-    print_in_yellow "Note: In macOS Sonoma, menu bar items are configured in Control Center settings\n"
+    print_in_yellow "Note: In macOS Sonoma, menu bar items are configured in Control Center settings
+"
 else
     execute "defaults write com.apple.systemuiserver menuExtras -array \
         '/System/Library/CoreServices/Menu Extras/Bluetooth.menu' \
@@ -265,14 +290,17 @@ execute "sudo systemsetup -settimezone 'America/New_York'" \
 
 # Stop iTunes from responding to the keyboard media keys
 if [[ $MACOS_MAJOR_VERSION -ge 14 ]]; then
-    print_in_yellow "Note: In macOS Sonoma, media key behavior is configured in System Settings > Keyboard\n"
+    print_in_yellow "Note: In macOS Sonoma, media key behavior is configured in System Settings > Keyboard
+"
 else
     execute "launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist 2> /dev/null" \
         "Stop iTunes from responding to media keys (pre-Sonoma)"
 fi
 
 # Restart affected applications
-print_in_yellow "\n >> Applying changes and restarting services\n"
+print_in_yellow "
+ >> Applying changes and restarting services
+"
 
 execute "killall Finder" \
     "Restart Finder"
@@ -284,4 +312,5 @@ execute "killall Dock" \
     "Restart Dock"
 
 print_success "System preferences have been configured"
-print_in_yellow "Note: Some system settings may require a system restart to take effect.\n"
+print_in_yellow "Note: Some system settings may require a system restart to take effect.
+"

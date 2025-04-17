@@ -6,8 +6,6 @@ source "${SCRIPT_DIR}/../../../utils.zsh"
 source "${SCRIPT_DIR}/../../utils.zsh" 2>/dev/null || true  # Source local utils if available
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-
 # Creative and 3D Tools Installation Script
 # This script installs popular creative and 3D design tools for macOS
 
@@ -15,7 +13,10 @@ source "${SCRIPT_DIR}/../../utils.zsh" 2>/dev/null || true  # Source local utils
 source "${SCRIPT_DIR}/utils.zsh"
 
 log_info "Starting installation of Creative and 3D Tools"
-print_in_purple "\n • Installing Creative and 3D Tools...\n\n"
+print_in_purple "
+ • Installing Creative and 3D Tools...
+
+"
 
 # Install Blender (3D creation suite)
 if ! is_app_installed "Blender"; then
@@ -267,4 +268,6 @@ else
 fi
 
 log_success "Creative and 3D Tools installation complete"
-print_in_green "\n ✓ Creative and 3D Tools installation complete!\n"
+print_in_green "
+ ✓ Creative and 3D Tools installation complete!
+"

@@ -6,8 +6,10 @@ source "${SCRIPT_DIR}/../../utils.zsh"
 source "${SCRIPT_DIR}/utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+print_in_purple "
+ >> Setting macOS Preferences
 
-print_in_purple "\n >> Setting macOS Preferences\n\n"
+"
 
 # Close any open System Preferences panes to prevent them from overriding settings
 osascript -e 'tell application "System Preferences" to quit'
@@ -152,5 +154,9 @@ for app in "Dock" "Finder" "SystemUIServer" "Terminal"; do
     killall "${app}" &> /dev/null
 done
 
-print_in_purple "\n >> macOS Preferences have been set\n\n"
-print_in_yellow "Note: Some of these changes require a logout/restart to take effect.\n"
+print_in_purple "
+ >> macOS Preferences have been set
+
+"
+print_in_yellow "Note: Some of these changes require a logout/restart to take effect.
+"

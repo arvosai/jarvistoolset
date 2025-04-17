@@ -5,8 +5,10 @@ SCRIPT_DIR=${0:a:h}
 source "${SCRIPT_DIR}/utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+print_in_purple "
+   Cleanup
 
-print_in_purple "\n   Cleanup\n\n"
+"
 
 # Homebrew Cleanup
 execute "brew cleanup" \
@@ -55,4 +57,6 @@ if command -v pip3 >/dev/null 2>&1; then
         "Clean up pip cache"
 fi
 
-print_in_green "\n   Cleanup completed!\n"
+print_in_green "
+   Cleanup completed!
+"

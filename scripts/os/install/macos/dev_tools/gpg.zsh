@@ -6,8 +6,10 @@ source "${SCRIPT_DIR}/../../utils.zsh"
 source "${SCRIPT_DIR}/utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+print_in_purple "
+   GPG Tools
 
-print_in_purple "\n   GPG Tools\n\n"
+"
 
 # Core GPG Tools
 if brew list | grep -q "gnupg"; then
@@ -84,7 +86,10 @@ else
 fi
 
 # Configure GPG Agent
-print_in_purple "\n   GPG Configuration\n\n"
+print_in_purple "
+   GPG Configuration
+
+"
 
 # Create modular configuration file for GPG
 create_gpg_config() {
@@ -215,4 +220,6 @@ print_result $? "Enable GPG signing for Git commits"
 git config --global gpg.program $(which gpg) &> /dev/null
 print_result $? "Set GPG program for Git"
 
-print_in_green "\n  GPG tools setup complete!\n"
+print_in_green "
+  GPG tools setup complete!
+"

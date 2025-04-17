@@ -6,8 +6,10 @@ source "${SCRIPT_DIR}/../../utils.zsh"
 source "${SCRIPT_DIR}/utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+print_in_purple "
+ >> Installing Utilities
 
-print_in_purple "\n >> Installing Utilities\n\n"
+"
 
 # Install The Unarchiver
 if brew_install "The Unarchiver" "the-unarchiver" "--cask"; then
@@ -49,4 +51,7 @@ if brew_install "fd" "fd"; then
     print_success "fd installed"
 fi
 
-print_in_purple "\n >> Utilities installation completed\n\n"
+print_in_purple "
+ >> Utilities installation completed
+
+"

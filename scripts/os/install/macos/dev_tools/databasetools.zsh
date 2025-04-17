@@ -6,16 +6,21 @@ source "${SCRIPT_DIR}/../../utils.zsh"
 source "${SCRIPT_DIR}/utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 # Add warning function if not already defined
 print_warning() {
-    print_in_yellow "  [!] $1\n"
+    print_in_yellow "  [!] $1
+"
 }
 
-print_in_purple "\n   Database Tools\n\n"
+print_in_purple "
+   Database Tools
+
+"
 
 # Traditional Database Tools
-print_in_purple "   Traditional Database Tools\n\n"
+print_in_purple "   Traditional Database Tools
+
+"
 
 # Azure Data Studio
 if brew list --cask | grep -q "azure-data-studio"; then
@@ -74,7 +79,10 @@ else
 fi
 
 # Vector Databases and AI Tools
-print_in_purple "\n   Vector Databases and AI Tools\n\n"
+print_in_purple "
+   Vector Databases and AI Tools
+
+"
 
 # Milvus (via Docker)
 print_in_yellow "  [ ] Milvus (optional)"
@@ -105,7 +113,10 @@ else
 fi
 
 # Python AI Libraries
-print_in_purple "\n   Python AI Libraries\n\n"
+print_in_purple "
+   Python AI Libraries
+
+"
 
 # Check if pip3 is available
 if command -v pip3 &> /dev/null; then
@@ -225,4 +236,6 @@ else
     print_result $? "Neo4j"
 fi
 
-print_in_green "\n  Database tools setup complete!\n"
+print_in_green "
+  Database tools setup complete!
+"

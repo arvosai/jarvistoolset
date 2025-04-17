@@ -6,8 +6,10 @@ SCRIPT_DIR=${0:a:h} \
     source "./utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+print_in_purple "
+   Image Tools
 
-print_in_purple "\n   Image Tools\n\n"
+"
 
 brew_install "GIMP" "gimp" "" "cask"
 brew_install "ImageAlpha" "imagealpha" "" "cask"

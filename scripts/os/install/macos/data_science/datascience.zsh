@@ -6,8 +6,10 @@ source "${SCRIPT_DIR}/../../utils.zsh"
 source "${SCRIPT_DIR}/utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+print_in_purple "
+   Data Science Environment
 
-print_in_purple "\n   Data Science Environment\n\n"
+"
 
 # Create a dedicated virtual environment for data science packages
 DATASCIENCE_ENV="datascience"
@@ -35,7 +37,8 @@ pip_install_in_env "Scikit-learn" "scikit-learn"
 # Machine Learning packages
 pip_install_in_env "TensorFlow" "tensorflow"
 # Fix PyTorch installation for macOS - use the official installation command
-print_in_yellow "Installing PyTorch for macOS...\n"
+print_in_yellow "Installing PyTorch for macOS...
+"
 if [[ "$(uname -m)" == "arm64" ]]; then
     # For Apple Silicon (M1/M2/M3)
     PYENV_VERSION=$DATASCIENCE_ENV pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
@@ -77,5 +80,8 @@ EOL
 chmod +x "$ACTIVATE_SCRIPT"
 print_result $? "Creating Data Science activation script"
 
-print_in_yellow "\n  To activate the Data Science environment, run:\n"
-print_in_yellow "  source ${DIRECTORY}/scripts/activate_datascience.sh\n"
+print_in_yellow "
+  To activate the Data Science environment, run:
+"
+print_in_yellow "  source ${DIRECTORY}/scripts/activate_datascience.sh
+"

@@ -6,11 +6,15 @@ source "${SCRIPT_DIR}/../../utils.zsh"
 source "${SCRIPT_DIR}/utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+print_in_purple "
+   Daily Tools
 
-print_in_purple "\n   Daily Tools\n\n"
+"
 
 # System Utilities
-print_in_purple "   System Utilities\n\n"
+print_in_purple "   System Utilities
+
+"
 
 if brew list --cask | grep -q "appcleaner"; then
     print_success "AppCleaner (already installed)"
@@ -34,7 +38,10 @@ else
 fi
 
 # Cloud Storage
-print_in_purple "\n   Cloud Storage\n\n"
+print_in_purple "
+   Cloud Storage
+
+"
 
 if brew list --cask | grep -q "dropbox"; then
     print_success "Dropbox (already installed)"
@@ -51,7 +58,10 @@ else
 fi
 
 # Security Tools
-print_in_purple "\n   Security Tools\n\n"
+print_in_purple "
+   Security Tools
+
+"
 
 if brew list --cask | grep -q "veracrypt"; then
     print_success "VeraCrypt (already installed)"
@@ -68,7 +78,10 @@ else
 fi
 
 # Development Tools
-print_in_purple "\n   Development Tools\n\n"
+print_in_purple "
+   Development Tools
+
+"
 
 if brew list --cask | grep -q "powershell"; then
     print_success "PowerShell (already installed)"
@@ -85,7 +98,10 @@ else
 fi
 
 # Media Tools
-print_in_purple "\n   Media Tools\n\n"
+print_in_purple "
+   Media Tools
+
+"
 
 if brew list --cask | grep -q "vlc"; then
     print_success "VLC (already installed)"
@@ -102,7 +118,10 @@ else
 fi
 
 # Communication
-print_in_purple "\n   Communication\n\n"
+print_in_purple "
+   Communication
+
+"
 
 if brew list --cask | grep -q "slack"; then
     print_success "Slack (already installed)"
@@ -119,7 +138,10 @@ else
 fi
 
 # Productivity Tools
-print_in_purple "\n   Productivity Tools\n\n"
+print_in_purple "
+   Productivity Tools
+
+"
 
 if brew list --cask | grep -q "grammarly"; then
     print_success "Grammarly (already installed)"
@@ -177,4 +199,6 @@ else
     print_result $? "Microsoft Teams"
 fi
 
-print_in_green "\n  Daily tools setup complete!\n"
+print_in_green "
+  Daily tools setup complete!
+"

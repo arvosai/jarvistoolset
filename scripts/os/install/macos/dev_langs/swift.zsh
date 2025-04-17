@@ -6,17 +6,23 @@ source "${SCRIPT_DIR}/../../../utils.zsh"
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 # Add warning function if not already defined
 print_warning() {
-    print_in_yellow "  [!] $1\n"
+    print_in_yellow "  [!] $1
+"
 }
 
-print_in_purple "\n   Swift Development Tools\n\n"
+print_in_purple "
+   Swift Development Tools
+
+"
 
 # Install Xcode Command Line Tools if not already installed
 if ! xcode-select -p &> /dev/null; then
-    print_in_purple "\n   Installing Xcode Command Line Tools\n\n"
+    print_in_purple "
+   Installing Xcode Command Line Tools
+
+"
     xcode-select --install
     print_result $? "Xcode Command Line Tools"
 else
@@ -24,7 +30,10 @@ else
 fi
 
 # Install Swift development tools
-print_in_purple "\n   Installing Swift Tools\n\n"
+print_in_purple "
+   Installing Swift Tools
+
+"
 
 # Install SwiftLint
 if brew list --formula 2>/dev/null | grep -q "^swiftlint$"; then
@@ -77,7 +86,10 @@ else
 fi
 
 # Install development tools
-print_in_purple "\n   Installing Development Tools\n\n"
+print_in_purple "
+   Installing Development Tools
+
+"
 
 # Install Carthage
 if brew list --formula 2>/dev/null | grep -q "^carthage$"; then
@@ -150,7 +162,10 @@ else
 fi
 
 # Configure Swift environment
-print_in_purple "\n   Configuring Swift Environment\n\n"
+print_in_purple "
+   Configuring Swift Environment
+
+"
 
 # Create a Swift project template
 mkdir -p "$HOME/.swift_project_template/Sources"
@@ -267,4 +282,6 @@ EOL
     print_result $? "Added Swift configuration to .zshrc"
 fi
 
-print_in_green "\n  Swift development environment setup complete!\n"
+print_in_green "
+  Swift development environment setup complete!
+"

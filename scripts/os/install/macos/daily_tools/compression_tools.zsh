@@ -6,8 +6,10 @@ source "${SCRIPT_DIR}/../../utils.zsh"
 source "${SCRIPT_DIR}/utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+print_in_purple "
+   Compression Tools
 
-print_in_purple "\n   Compression Tools\n\n"
+"
 
 # Standard Compression Tools
 brew_install "Brotli" "brotli"

@@ -17,11 +17,28 @@ install_npm_package() {
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+# Create framed header with script details and tools list
+create_framed_header "$0" "Installs and configures npm tools"  (npm)  (npm)
+
+
+# Create framed header with script details and tools list
+
+
+# Create framed header with script details and tools list
+
+
+# Create a banner for this installation script
+create_install_banner "$0"
+
+
 main() {
 
     local USERNAME="$1"
 
-    print_in_purple "\n   npm\n\n"
+    print_in_purple "
+   npm
+
+"
 
     # Check if Node.js is installed
     if ! cmd_exists "node"; then

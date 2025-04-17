@@ -4,10 +4,12 @@
 SCRIPT_DIR=${0:a:h} \
     source "../../utils.zsh"
 
-print_in_purple "\n   Meta AI Tools\n\n"
+print_in_purple "
+   Meta AI Tools
+
+"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 # Core Meta AI
 execute "pip3 install torch" \
     "Installing PyTorch"

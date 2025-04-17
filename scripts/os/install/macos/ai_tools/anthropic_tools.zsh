@@ -4,10 +4,12 @@
 SCRIPT_DIR=${0:a:h}
 source "${SCRIPT_DIR}/utils.zsh"
 
-print_in_purple "\n   Anthropic Tools\n\n"
+print_in_purple "
+   Anthropic Tools
+
+"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 # Ensure pip is up to date
 execute "pip3 install --upgrade pip" \
     "Upgrading pip to latest version"
@@ -119,8 +121,17 @@ mkdir -p "$HOME/.jarvistoolset/zsh_configs"
 cp "$SCRIPT_DIR/../../../../zsh_configs/anthropic.zsh" "$HOME/.jarvistoolset/zsh_configs/" 2>/dev/null || true
 
 # Print setup instructions
-print_in_green "\n   Anthropic Tools Installation Complete!\n\n"
-print_in_yellow "   To configure your Anthropic API key, add the following to your environment:\n"
-print_in_yellow "   export ANTHROPIC_API_KEY='your-api-key'\n\n"
-print_in_yellow "   To start using MCP Server, run:\n"
-print_in_yellow "   mcp-start\n\n"
+print_in_green "
+   Anthropic Tools Installation Complete!
+
+"
+print_in_yellow "   To configure your Anthropic API key, add the following to your environment:
+"
+print_in_yellow "   export ANTHROPIC_API_KEY='your-api-key'
+
+"
+print_in_yellow "   To start using MCP Server, run:
+"
+print_in_yellow "   mcp-start
+
+"

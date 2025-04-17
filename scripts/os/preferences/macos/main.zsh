@@ -20,7 +20,10 @@ SELECTED_CATEGORIES="$4"
 DIRECTORY=${DIRECTORY:-"$HOME/.jarvistoolset"}
 
 # Print header
-print_in_purple "\n >> macOS Preferences Configuration\n\n"
+print_in_purple "
+ >> macOS Preferences Configuration
+
+"
 
 # Define preference categories
 typeset -A PREF_CATEGORIES
@@ -60,10 +63,16 @@ PREF_CATEGORIES=(
 )
 
 # Ask user how they want to configure preferences
-print_in_yellow "\nHow would you like to configure preferences?\n"
-print_in_yellow "0) Configure all preferences\n"
-print_in_yellow "1) Select specific categories\n"
-print_in_yellow "2) Skip all preferences\n\n"
+print_in_yellow "
+How would you like to configure preferences?
+"
+print_in_yellow "0) Configure all preferences
+"
+print_in_yellow "1) Select specific categories
+"
+print_in_yellow "2) Skip all preferences
+
+"
 
 # Get user selection
 choice=""
@@ -83,10 +92,14 @@ if [[ "$choice" == "0" ]]; then
     for category in ${(k)PREF_CATEGORIES}; do
         SELECTED_PREFS[$category]="true"
     done
-    print_in_green "\nAll preference categories selected\n"
+    print_in_green "
+All preference categories selected
+"
 elif [[ "$choice" == "1" ]]; then
     # Custom selection
-    print_in_yellow "\nSelect preference categories (enter y/n for each):\n"
+    print_in_yellow "
+Select preference categories (enter y/n for each):
+"
     
     for category in ${(k)PREF_CATEGORIES}; do
         category_choice=""
@@ -97,10 +110,14 @@ elif [[ "$choice" == "1" ]]; then
         fi
     done
 elif [[ "$choice" == "2" ]]; then
-    print_in_yellow "\nSkipping all preferences\n"
+    print_in_yellow "
+Skipping all preferences
+"
     exit 0
 else
-    print_in_red "\nInvalid choice. No preferences will be configured.\n"
+    print_in_red "
+Invalid choice. No preferences will be configured.
+"
     exit 1
 fi
 
@@ -120,7 +137,9 @@ fi
 
 # If no categories were selected, exit
 if [[ -z "$SELECTED_CATEGORIES" ]]; then
-    print_in_yellow "\nNo preferences selected. Skipping configuration.\n"
+    print_in_yellow "
+No preferences selected. Skipping configuration.
+"
     exit 0
 fi
 
@@ -131,15 +150,20 @@ IFS=',' read -rA CATEGORY_ARRAY <<< "$SELECTED_CATEGORIES"
 run_preference_script() {
     local script="$1"
     if [[ -f "$script" && -x "$script" ]]; then
-        print_in_yellow "Running $(basename "$script")...\n"
+        print_in_yellow "Running $(basename "$script")...
+"
         "$script"
     else
-        print_in_red "Script not found or not executable: $script\n"
+        print_in_red "Script not found or not executable: $script
+"
     fi
 }
 
 # Process each preference category
-print_in_purple "\n >> Configuring selected preferences\n\n"
+print_in_purple "
+ >> Configuring selected preferences
+
+"
 
 # System Preferences
 for category in ${(k)PREF_CATEGORIES}; do
@@ -150,17 +174,25 @@ for category in ${(k)PREF_CATEGORIES}; do
         run_preference_script "$script"
     else
         script_name=$(basename "$script")
-        print_in_red "Skipping $script_name (not selected)\n"
+        print_in_red "Skipping $script_name (not selected)
+"
     fi
 done
 
-print_in_purple "\n >> System preferences configuration completed\n\n"
+print_in_purple "
+ >> System preferences configuration completed
+
+"
 
 # Application Preferences
 # Add application preferences scripts here if needed
 
-print_in_purple "\n >> All selected preferences have been configured\n\n"
-print_in_yellow "Note: Some changes may require a system restart to take effect.\n"
+print_in_purple "
+ >> All selected preferences have been configured
+
+"
+print_in_yellow "Note: Some changes may require a system restart to take effect.
+"
 
 # Minimum supported macOS version
 MINIMUM_MACOS_VERSION="14.0.0"  # macOS Sonoma
@@ -169,16 +201,21 @@ MINIMUM_MACOS_VERSION="14.0.0"  # macOS Sonoma
 check_macos_compatibility() {
     local current_version=$(sw_vers -productVersion)
     
-    print_in_yellow "\n >> Checking macOS version compatibility\n"
-    print_in_yellow "   Current macOS version: $current_version\n"
-    print_in_yellow "   Minimum supported version: $MINIMUM_MACOS_VERSION\n"
+    print_in_yellow "
+ >> Checking macOS version compatibility
+"
+    print_in_yellow "   Current macOS version: $current_version
+"
+    print_in_yellow "   Minimum supported version: $MINIMUM_MACOS_VERSION
+"
     
     if is_supported_version "$current_version" "$MINIMUM_MACOS_VERSION"; then
         print_success "macOS version is compatible"
         return 0
     else
         print_error "Your macOS version ($current_version) is not supported"
-        print_in_yellow "Please upgrade to macOS Sonoma ($MINIMUM_MACOS_VERSION) or later before running these preference scripts.\n"
+        print_in_yellow "Please upgrade to macOS Sonoma ($MINIMUM_MACOS_VERSION) or later before running these preference scripts.
+"
         return 1
     fi
 }
@@ -189,13 +226,15 @@ run_preference_script_with_error_handling() {
     local script_name=$(basename "$script")
     
     if [[ -f "$script" && -x "$script" ]]; then
-        print_in_yellow "Running $script_name...\n"
+        print_in_yellow "Running $script_name...
+"
         "$script" 2>/tmp/preference_error_$$.log
         
         if [[ $? -ne 0 ]]; then
             print_warning "Warning: $script_name encountered issues"
             if [[ -s /tmp/preference_error_$$.log ]]; then
-                print_in_yellow "Error details:\n"
+                print_in_yellow "Error details:
+"
                 cat /tmp/preference_error_$$.log
             fi
         else
@@ -211,35 +250,42 @@ run_preference_script_with_error_handling() {
 # Special handling for UI and UX script with hostname parameter
 if [[ -f "$PREFERENCE_SCRIPTS_DIR/ui_and_ux.zsh" && -x "$PREFERENCE_SCRIPTS_DIR/ui_and_ux.zsh" ]]; then
     if is_category_selected "UI"; then
-        print_in_yellow "Running ui_and_ux.zsh with hostname parameter...\n"
+        print_in_yellow "Running ui_and_ux.zsh with hostname parameter...
+"
         "$PREFERENCE_SCRIPTS_DIR/ui_and_ux.zsh" "$HOSTNAME"
         print_success "ui_and_ux.zsh completed"
     else
-        print_in_yellow "Skipping ui_and_ux.zsh (not selected)\n"
+        print_in_yellow "Skipping ui_and_ux.zsh (not selected)
+"
     fi
 fi
 
 # Run users_groups script if selected
 if [[ -f "$PREFERENCE_SCRIPTS_DIR/users_groups.zsh" && -x "$PREFERENCE_SCRIPTS_DIR/users_groups.zsh" ]]; then
     if is_category_selected "System"; then
-        print_in_yellow "Running users_groups.zsh...\n"
+        print_in_yellow "Running users_groups.zsh...
+"
         "$PREFERENCE_SCRIPTS_DIR/users_groups.zsh"
         print_success "users_groups.zsh completed"
     else
-        print_in_yellow "Skipping users_groups.zsh (not selected)\n"
+        print_in_yellow "Skipping users_groups.zsh (not selected)
+"
     fi
 fi
 
 # Check macOS compatibility before proceeding
 if ! check_macos_compatibility; then
-    print_in_red "\nAborting preferences configuration due to incompatible macOS version.\n"
+    print_in_red "
+Aborting preferences configuration due to incompatible macOS version.
+"
     exit 1
 fi
 
 # Close any open System Preferences panes to prevent
 # overriding the preferences that are being changed.
 if [[ -f "$PREFERENCE_SCRIPTS_DIR/close_system_preferences_panes.applescript" ]]; then
-    print_in_yellow "Closing any open System Settings panes...\n"
+    print_in_yellow "Closing any open System Settings panes...
+"
     "$PREFERENCE_SCRIPTS_DIR/close_system_preferences_panes.applescript"
 else
     print_warning "close_system_preferences_panes.applescript not found"
@@ -295,14 +341,22 @@ for script in ${(k)PREFERENCE_SCRIPTS}; do
         run_preference_script_with_error_handling "$script"
     else
         script_name=$(basename "$script")
-        print_in_red "Skipping $script_name (not selected)\n"
+        print_in_red "Skipping $script_name (not selected)
+"
     fi
 done
 
-print_in_purple "\n >> System preferences configuration completed\n\n"
+print_in_purple "
+ >> System preferences configuration completed
+
+"
 
 # Application Preferences
 # Add application preferences scripts here if needed
 
-print_in_purple "\n >> All selected preferences have been configured\n\n"
-print_in_yellow "Note: Some changes may require a system restart to take effect.\n"
+print_in_purple "
+ >> All selected preferences have been configured
+
+"
+print_in_yellow "Note: Some changes may require a system restart to take effect.
+"

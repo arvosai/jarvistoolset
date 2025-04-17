@@ -6,8 +6,10 @@ source "${SCRIPT_DIR}/../../../utils.zsh"
 source "${SCRIPT_DIR}/../../../utils.zsh" 2>/dev/null || true  # Source local utils if available
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+print_in_purple "
+   Node.js
 
-print_in_purple "\n   Node.js\n\n"
+"
 
 # Install NVM (Node Version Manager)
 install_nvm() {
@@ -77,7 +79,10 @@ npm_install() {
 
 # Install global npm packages
 install_npm_packages() {
-    print_in_purple "\n   Installing Global npm Packages\n\n"
+    print_in_purple "
+   Installing Global npm Packages
+
+"
     
     # Update npm
     execute "npm install -g npm@latest" "npm update"
@@ -221,7 +226,8 @@ create-node-project() {
             touch src/index.js
             
             # Add start script
-            sed -i '' 's/"test": "echo \\"Error: no test specified\\" && exit 1"/"test": "echo \\"Error: no test specified\\" && exit 1",\n    "start": "node src\/index.js"/' package.json
+            sed -i '' 's/"test": "echo \"Error: no test specified\" && exit 1"/"test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src\/index.js"/' package.json
             
             # Create basic index.js
             cat > src/index.js << 'EOF'
@@ -289,7 +295,9 @@ EOF
             touch src/index.js
             
             # Add scripts
-            sed -i '' 's/"test": "echo \\"Error: no test specified\\" && exit 1"/"test": "echo \\"Error: no test specified\\" && exit 1",\n    "start": "node src\/index.js",\n    "dev": "nodemon src\/index.js"/' package.json
+            sed -i '' 's/"test": "echo \"Error: no test specified\" && exit 1"/"test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src\/index.js",
+    "dev": "nodemon src\/index.js"/' package.json
             
             # Create basic Express app
             cat > src/index.js << 'EOF'
@@ -376,7 +384,10 @@ EOF
             touch src/index.ts
             
             # Add scripts
-            sed -i '' 's/"test": "echo \\"Error: no test specified\\" && exit 1"/"test": "echo \\"Error: no test specified\\" && exit 1",\n    "start": "node dist\/index.js",\n    "build": "tsc",\n    "dev": "nodemon --exec ts-node src\/index.ts"/' package.json
+            sed -i '' 's/"test": "echo \"Error: no test specified\" && exit 1"/"test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node dist\/index.js",
+    "build": "tsc",
+    "dev": "nodemon --exec ts-node src\/index.ts"/' package.json
             
             # Create basic TypeScript file
             cat > src/index.ts << 'EOF'
@@ -453,7 +464,10 @@ EOF
             touch src/index.ts
             
             # Add scripts
-            sed -i '' 's/"test": "echo \\"Error: no test specified\\" && exit 1"/"test": "echo \\"Error: no test specified\\" && exit 1",\n    "start": "node dist\/index.js",\n    "build": "tsc",\n    "dev": "nodemon --exec ts-node src\/index.ts"/' package.json
+            sed -i '' 's/"test": "echo \"Error: no test specified\" && exit 1"/"test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node dist\/index.js",
+    "build": "tsc",
+    "dev": "nodemon --exec ts-node src\/index.ts"/' package.json
             
             # Create basic Express app with TypeScript
             cat > src/index.ts << 'EOF'
@@ -590,7 +604,9 @@ EOL
         print_result $? "Added Node.js configuration to .zshrc"
     fi
     
-    print_in_green "\n  Node.js development environment setup complete!\n"
+    print_in_green "
+  Node.js development environment setup complete!
+"
 }
 
 # Run main function

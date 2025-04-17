@@ -8,8 +8,10 @@ source "${SCRIPT_DIR}/../../../utils.zsh"
 trap '' PIPE
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+print_in_purple "
+   Kotlin
 
-print_in_purple "\n   Kotlin\n\n"
+"
 
 # Install Kotlin
 brew_install "Kotlin" "kotlin"
@@ -299,7 +301,10 @@ EOL
 }
 
 # Install Kotlin tools
-print_in_purple "\n   Installing Kotlin Tools\n\n"
+print_in_purple "
+   Installing Kotlin Tools
+
+"
 
 # Install Gradle
 brew_install "Gradle" "gradle"
@@ -326,4 +331,6 @@ EOL
     print_result $? "Added Kotlin configuration to .zshrc"
 fi
 
-print_in_green "\n  Kotlin development environment setup complete!\n"
+print_in_green "
+  Kotlin development environment setup complete!
+"

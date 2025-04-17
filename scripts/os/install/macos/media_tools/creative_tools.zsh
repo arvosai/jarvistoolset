@@ -4,10 +4,12 @@
 SCRIPT_DIR=${0:a:h}
 source "${SCRIPT_DIR}/utils.zsh"
 
-print_in_purple "\n   Creative and Generative AI Tools\n\n"
+print_in_purple "
+   Creative and Generative AI Tools
+
+"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 # Image Creation and Editing
 brew_cask_install "adobe-creative-cloud" "Installing Adobe Creative Cloud" true
 

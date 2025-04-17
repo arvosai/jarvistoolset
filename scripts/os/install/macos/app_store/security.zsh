@@ -6,15 +6,15 @@ source "${SCRIPT_DIR}/../../../utils.zsh"
 source "${SCRIPT_DIR}/../../utils.zsh" 2>/dev/null || true  # Source local utils if available
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-
 cd "$(dirname "${BASH_SOURCE[0]}")" \
     && source "../../utils.zsh" \
     && source "./utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+print_in_purple "
+   Security Tools
 
-print_in_purple "\n   Security Tools\n\n"
+"
 
 # Install security-related tools
 brew_install "GPG" "gnupg"
@@ -235,4 +235,6 @@ create_ipfs_config
 configure_gpg
 initialize_ipfs
 
-print_in_green "\n  Security tools installed and configured!\n"
+print_in_green "
+  Security tools installed and configured!
+"

@@ -4,10 +4,12 @@
 SCRIPT_DIR=${0:a:h}
 source "${SCRIPT_DIR}/utils.zsh"
 
-print_in_purple "\n   Vercel Development Tools\n\n"
+print_in_purple "
+   Vercel Development Tools
+
+"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 # Vercel Platform
 execute "npm install -g vercel" \
     "Installing Vercel CLI"

@@ -6,8 +6,10 @@ source "${SCRIPT_DIR}/../../utils.zsh"
 source "${SCRIPT_DIR}/utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+print_in_purple "
+   Git Tools
 
-print_in_purple "\n   Git Tools\n\n"
+"
 
 # Core Git Tools
 if brew list | grep -q "git"; then
@@ -132,7 +134,10 @@ else
 fi
 
 # Git Configuration
-print_in_purple "\n   Git Configuration\n\n"
+print_in_purple "
+   Git Configuration
+
+"
 
 # Configure Git credential helper
 if [[ "$(git config --global credential.helper)" == "osxkeychain" ]]; then
@@ -167,4 +172,6 @@ EOF
     print_result $? "Configure Git to use SSH for GitHub"
 fi
 
-print_in_green "\n  Git tools setup complete!\n"
+print_in_green "
+  Git tools setup complete!
+"

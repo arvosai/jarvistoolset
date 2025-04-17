@@ -6,8 +6,10 @@ source "${SCRIPT_DIR}/../../utils.zsh"
 source "${SCRIPT_DIR}/utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+print_in_purple "
+   JetBrains Tools
 
-print_in_purple "\n   JetBrains Tools\n\n"
+"
 
 # IDEs for different languages/platforms
 brew_install "IntelliJ IDEA Ultimate" "intellij-idea" "--cask"

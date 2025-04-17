@@ -5,8 +5,10 @@ SCRIPT_DIR=${0:a:h}
 source "${SCRIPT_DIR}/../../../utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+print_in_purple "
+   Ruby Development Tools
 
-print_in_purple "\n   Ruby Development Tools\n\n"
+"
 
 # Install rbenv for Ruby version management
 brew_install "rbenv" "rbenv"
@@ -90,7 +92,7 @@ new-ruby() {
     # Create main lib file
     cat > "lib/${project_name}.rb" << EOF
 # Main module for ${project_name}
-module $(echo "${project_name}" | sed -r 's/(^|_)([a-z])/\U\2/g')
+module $(echo "${project_name}" | sed -r 's/(^|_)([a-z])/
   VERSION = '0.1.0'
 end
 EOF
@@ -127,9 +129,9 @@ EOF
     cat > "spec/${project_name}_spec.rb" << EOF
 require 'spec_helper'
 
-RSpec.describe $(echo "${project_name}" | sed -r 's/(^|_)([a-z])/\U\2/g') do
+RSpec.describe $(echo "${project_name}" | sed -r 's/(^|_)([a-z])/
   it "has a version number" do
-    expect($(echo "${project_name}" | sed -r 's/(^|_)([a-z])/\U\2/g')::VERSION).not_to be nil
+    expect($(echo "${project_name}" | sed -r 's/(^|_)([a-z])/
   end
 end
 EOF
@@ -169,7 +171,7 @@ Gem::Specification.new do |spec|
   # Specify which files should be added to the gem when it is released.
   # The \`git ls-files -z\` loads the files in the RubyGem that have been added into git.
   spec.files = Dir.chdir(__dir__) do
-    \`git ls-files -z\`.split("\\x0").reject do |f|
+    \`git ls-files -z\`.split("
       (f == __FILE__) || f.match(%r{\A(?:(?:bin|test|spec|features)/|\.(?:git|travis|circleci)|appveyor)})
     end
   end
@@ -235,7 +237,10 @@ EOL
 }
 
 # Install the latest stable version of Ruby
-print_in_purple "\n   Installing Ruby\n\n"
+print_in_purple "
+   Installing Ruby
+
+"
 
 # Initialize rbenv
 if command -v rbenv 1>/dev/null 2>&1; then
@@ -269,7 +274,10 @@ rbenv global "$latest_ruby_version" && print_success "Set Ruby version as global
 rbenv rehash
 
 # Install common gems
-print_in_purple "\n   Installing Ruby Gems\n\n"
+print_in_purple "
+   Installing Ruby Gems
+
+"
 
 # Function to install a gem
 install_gem() {
@@ -310,10 +318,15 @@ EOL
     print_result $? "Added Ruby configuration to .zshrc"
 fi
 
-print_in_green "\n  Ruby development environment setup complete!\n"
+print_in_green "
+  Ruby development environment setup complete!
+"
 
 # Install MySQL and necessary dependencies
-print_in_purple "\n   Installing MySQL and dependencies\n\n"
+print_in_purple "
+   Installing MySQL and dependencies
+
+"
 
 # Install MySQL
 brew_install "mysql" "mysql"
@@ -330,7 +343,10 @@ if ! brew services list | grep -q "mysql.*started"; then
 fi
 
 # Fix MySQL2 gem installation
-print_in_purple "\n   Installing MySQL2 gem\n\n"
+print_in_purple "
+   Installing MySQL2 gem
+
+"
 
 # Get paths for required libraries
 MYSQL_DIR=$(brew --prefix mysql)

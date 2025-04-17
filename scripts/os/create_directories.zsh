@@ -8,6 +8,16 @@ source "${SCRIPT_DIR}/logging.zsh" 2>/dev/null || true
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+# Create framed header with script details and tools list
+create_framed_header "$0" "Installs and configures create_directories tools" No specific tools identified in script
+
+
+# Create framed header with script details and tools list
+
+
+# Create framed header with script details and tools list
+
+
 create_directories() {
     # Define directories to create using zsh array syntax
     local -a DIRECTORIES=(
@@ -46,7 +56,10 @@ create_directories() {
         "$HOME/.jarvistoolset/logs" # Installation logs
     )
 
-    print_in_purple "\n >> Creating directories\n\n"
+    print_in_purple "
+ >> Creating directories
+
+"
     
     # Log the directory creation process
     if type log_info &>/dev/null; then

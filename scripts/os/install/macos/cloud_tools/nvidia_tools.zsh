@@ -4,10 +4,12 @@
 SCRIPT_DIR=${0:a:h} \
     source "../../utils.zsh"
 
-print_in_purple "\n   NVIDIA Tools\n\n"
+print_in_purple "
+   NVIDIA Tools
+
+"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 # CUDA Toolkit
 execute "brew install cuda" \
     "Installing CUDA Toolkit"

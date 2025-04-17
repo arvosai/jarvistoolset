@@ -8,6 +8,16 @@ DIRECTORY="$4"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+# Create framed header with script details and tools list
+create_framed_header "$0" "Installs and configures create_symbolic_links tools" No specific tools identified in script
+
+
+# Create framed header with script details and tools list
+
+
+# Create framed header with script details and tools list
+
+
 create_symlinks() {
     # Declare files to symlink with zsh array syntax
     local -a FILES_TO_SYMLINK=(
@@ -78,7 +88,10 @@ create_symlinks() {
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 main() {
-    print_in_purple "\n   Create symbolic links\n\n"
+    print_in_purple "
+   Create symbolic links
+
+"
     create_symlinks "$@"
 }
 

@@ -4,10 +4,12 @@
 SCRIPT_DIR=${0:a:h} \
     source "../../utils.zsh"
 
-print_in_purple "\n   Generative AI Tools\n\n"
+print_in_purple "
+   Generative AI Tools
+
+"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 # Core Image Generation
 execute "pip3 install diffusers" \
     "Installing Diffusers for Stable Diffusion"

@@ -6,12 +6,13 @@ SCRIPT_DIR=${0:a:h} \
     source "./utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-print_in_purple "\n   Office 365\n"
+print_in_purple "
+   Office 365
+"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-printf "\n"
+printf "
+"
 
 brew_install "Office 365" "microsoft-office" "caskroom/cask" "cask"
 brew_install "Microsoft Teams" "microsoft-teams" "caskroom/versions" "cask"

@@ -1046,3 +1046,274 @@ sdk_install() {
     
     return $RESULT
 }
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# | Banner Functions                                                   |
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# Create a banner using figlet with jazmine font
+create_figlet_banner() {
+    local title="$1"
+    local width=80
+    local line=$(printf '%*s' "$width" | tr ' ' '=')
+    
+    echo "\n$line"
+    
+    # Check if figlet is installed
+    if command -v figlet &>/dev/null; then
+        # Check if jazmine font is available
+        if figlet -f jazmine "test" &>/dev/null; then
+            figlet -f jazmine "$title"
+        else
+            # If jazmine font is not available, use default font
+            figlet "$title"
+            echo "\nNote: 'jazmine' font not found. Using default font."
+            echo "To install more figlet fonts: brew install figlet-fonts"
+        fi
+    else
+        # If figlet is not installed, create a simple text banner
+        echo "\n:: $title ::\n"
+        echo "Note: figlet not installed. Using simple text banner."
+        echo "To install figlet: brew install figlet"
+    fi
+    
+    echo "$line\n"
+}
+
+# Function to extract group name from script path
+get_group_name_from_path() {
+    local script_path="$1"
+    local group_name
+    
+    # Extract the group name from the path
+    # Example: /Users/evandroreis/.jarvistoolset/scripts/os/install/macos/dev_langs/python.zsh
+    # Group name: DEV LANGS
+    
+    # Get the directory name
+    group_name=$(dirname "$script_path" | xargs basename)
+    
+    # Convert to uppercase and replace underscores with spaces
+    group_name=$(echo "$group_name" | tr '[:lower:]' '[:upper:]' | tr '_' ' ')
+    
+    echo "$group_name"
+}
+
+# Create a banner for an installation script
+create_install_banner() {
+    local script_path="$1"
+    local script_name=$(basename "$script_path")
+    local group_name=$(get_group_name_from_path "$script_path")
+    
+    # Create the banner
+    create_figlet_banner "$group_name - $script_name"
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# | Header Functions                                                   |
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# Function to create an asterisk-framed header with script details and tools list
+create_framed_header() {
+    local script_path="$1"
+    local description="$2"
+    local tools_array=("${@:3}")  # Get all remaining arguments as tools array
+    
+    # Get script name with extension
+    local script_name=$(basename "$script_path")
+    
+    # Get current timestamp
+    local timestamp=$(date +"%Y-%m-%d %H:%M:%S")
+    
+    # Calculate frame width (80 characters)
+    local frame_width=80
+    
+    # Create the top frame border
+    local border=$(printf '%*s' "$frame_width" | tr ' ' '*')
+    
+    # Print the framed header
+    echo "$border"
+    
+    # Print script name centered
+    local name_line="**  ${script_name}  **"
+    printf "%-${frame_width}s\n" "$name_line" | sed 's/ $/*/g'
+    
+    # Print timestamp
+    local time_line="**  Timestamp: ${timestamp}  **"
+    printf "%-${frame_width}s\n" "$time_line" | sed 's/ $/*/g'
+    
+    # Print description
+    local desc_line="**  Description: ${description}  **"
+    printf "%-${frame_width}s\n" "$desc_line" | sed 's/ $/*/g'
+    
+    # Print separator line
+    local separator="**  "
+    separator+=$(printf '%*s' $((frame_width - 6)) | tr ' ' '-')
+    separator+="  **"
+    echo "$separator"
+    
+    # Print tools header
+    local tools_header="**  Tools to be installed and/or configured:  **"
+    printf "%-${frame_width}s\n" "$tools_header" | sed 's/ $/*/g'
+    
+    # Print tools list
+    local counter=1
+    for tool in "${tools_array[@]}"; do
+        local tool_line="**  ${counter}. ${tool}  **"
+        printf "%-${frame_width}s\n" "$tool_line" | sed 's/ $/*/g'
+        ((counter++))
+    done
+    
+    # Print the bottom frame border
+    echo "$border"
+    echo ""
+}
+
+# Function to extract tools from a script file
+extract_tools_from_script() {
+    local script_path="$1"
+    local tools=()
+    
+    # Extract tool names from various installation commands
+    while IFS= read -r line; do
+        # Extract tool name from brew_install lines
+        if [[ "$line" =~ brew_install[[:space:]]+\"([^\"]+)\"[[:space:]]+\"([^\"]+)\" ]]; then
+            tools+=("${BASH_REMATCH[1]}")
+        # Extract tool name from npm_install lines
+        elif [[ "$line" =~ npm_install[[:space:]]+\"([^\"]+)\" ]]; then
+            tools+=("${BASH_REMATCH[1]} (npm)")
+        # Extract tool name from pip_install lines
+        elif [[ "$line" =~ pip_install[[:space:]]+\"([^\"]+)\" ]]; then
+            tools+=("${BASH_REMATCH[1]} (pip)")
+        # Extract tool name from gem_install lines
+        elif [[ "$line" =~ gem_install[[:space:]]+\"([^\"]+)\" ]]; then
+            tools+=("${BASH_REMATCH[1]} (gem)")
+        # Extract tool name from cargo_install lines
+        elif [[ "$line" =~ cargo_install[[:space:]]+\"([^\"]+)\" ]]; then
+            tools+=("${BASH_REMATCH[1]} (cargo)")
+        # Extract tool name from go_install lines
+        elif [[ "$line" =~ go_install[[:space:]]+\"([^\"]+)\" ]]; then
+            tools+=("${BASH_REMATCH[1]} (go)")
+        fi
+    done < "$script_path"
+    
+    # If no tools were found, add a default message
+    if [ ${#tools[@]} -eq 0 ]; then
+        tools+=("No specific tools identified in script")
+    fi
+    
+    # Return the tools array
+    echo "${tools[@]}"
+}
+
+# Get script description based on directory and filename
+get_script_description() {
+    local script_path="$1"
+    local script_name=$(basename "$script_path" .zsh)
+    local dir_name=$(dirname "$script_path" | xargs basename)
+    
+    # Default description
+    local description="Installs and configures ${script_name} tools"
+    
+    # Customize description based on directory
+    case "$dir_name" in
+        "dev_langs")
+            description="Installs and configures ${script_name} programming language and related tools"
+            ;;
+        "dev_tools")
+            description="Installs and configures ${script_name} development tools"
+            ;;
+        "system")
+            description="Configures ${script_name} system settings and tools"
+            ;;
+        "daily_tools")
+            description="Installs ${script_name} productivity applications"
+            ;;
+        "ai_tools")
+            description="Installs ${script_name} AI and machine learning tools"
+            ;;
+        "web_tools")
+            description="Installs ${script_name} web development tools"
+            ;;
+        "media_tools")
+            description="Installs ${script_name} media editing and viewing tools"
+            ;;
+        "cloud_tools")
+            description="Installs ${script_name} cloud services tools"
+            ;;
+        "creative_tools")
+            description="Installs ${script_name} creative and design tools"
+            ;;
+        "fonts")
+            description="Installs ${script_name} fonts"
+            ;;
+        "app_store")
+            description="Installs ${script_name} applications from the App Store"
+            ;;
+        "data_science")
+            description="Installs ${script_name} data science tools"
+            ;;
+        "utils")
+            description="Utility scripts for ${script_name}"
+            ;;
+        *)
+            # Keep default description
+            ;;
+    esac
+    
+    echo "$description"
+}
+
+# Main function to add framed header to a script
+add_framed_header_to_script() {
+    local script_path="$1"
+    local script_name=$(basename "$script_path")
+    
+    # Skip template and utility scripts
+    if [[ "$script_name" == "template.zsh" || "$script_name" == "update_banners.zsh" || "$script_name" == "update_headers.zsh" || "$script_name" == "utils.zsh" ]]; then
+        return 0
+    fi
+    
+    echo "Adding framed header to: $script_path"
+    
+    # Get script description
+    local description=$(get_script_description "$script_path")
+    
+    # Extract tools from the script
+    local tools_string=$(extract_tools_from_script "$script_path")
+    local tools_array=($tools_string)
+    
+    # Create a temporary file
+    local temp_file=$(mktemp)
+    
+    # Read the script file
+    local script_content=$(cat "$script_path")
+    
+    # Remove any existing framed header calls
+    script_content=$(echo "$script_content" | sed '/create_framed_header/d')
+    
+    # Add the function call after the separator line
+    script_content=$(echo "$script_content" | awk -v script="$script_path" -v desc="$description" -v tools="${tools_array[*]}" '
+    BEGIN { found = 0; }
+    
+    /^# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -$/ && !found {
+        print $0;
+        print "";
+        print "# Create framed header with script details and tools list";
+        print "create_framed_header \"$0\" \"" desc "\" " tools;
+        print "";
+        found = 1;
+        next;
+    }
+    
+    { print $0; }
+    ')
+    
+    # Write the modified content back to the temporary file
+    echo "$script_content" > "$temp_file"
+    
+    # Replace the original file with the modified one
+    mv "$temp_file" "$script_path"
+    chmod +x "$script_path"
+    
+    echo "Added framed header to: $script_path"
+}

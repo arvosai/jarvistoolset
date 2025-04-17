@@ -6,6 +6,16 @@ source "${SCRIPT_DIR}/utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+# Create framed header with script details and tools list
+create_framed_header "$0" "Installs and configures update_content tools" No specific tools identified in script
+
+
+# Create framed header with script details and tools list
+
+
+# Create framed header with script details and tools list
+
+
 verify_git_config() {
     if ! git config --get user.name &> /dev/null; then
         print_error "Git user.name is not set"
@@ -21,7 +31,10 @@ verify_git_config() {
 }
 
 verify_github_ssh() {
-    print_in_purple "\n >> Verifying GitHub SSH access\n\n"
+    print_in_purple "
+ >> Verifying GitHub SSH access
+
+"
     
     if ! ssh -T git@github.com &> /dev/null; then
         if [[ $? -ne 1 ]]; then
@@ -41,7 +54,10 @@ update_jarvistoolset() {
         return 1
     fi
 
-    print_in_purple "\n >> Updating jarvistoolset content\n\n"
+    print_in_purple "
+ >> Updating jarvistoolset content
+
+"
 
     # Stash any local changes
     if ! git diff --quiet HEAD; then

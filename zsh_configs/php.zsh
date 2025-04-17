@@ -66,12 +66,12 @@ new-php() {
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "App\\\\": "src/"
+            "App\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\\\": "tests/"
+            "Tests\": "tests/"
         }
     },
     "require": {
@@ -97,7 +97,7 @@ EOF
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use App\\App;
+use App\App;
 
 \$app = new App();
 \$app->run();

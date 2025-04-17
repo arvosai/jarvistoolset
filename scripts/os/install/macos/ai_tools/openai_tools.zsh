@@ -4,10 +4,12 @@
 SCRIPT_DIR=${0:a:h} \
     source "../../utils.zsh"
 
-print_in_purple "\n   OpenAI Tools\n\n"
+print_in_purple "
+   OpenAI Tools
+
+"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 # Core OpenAI
 execute "pip3 install openai" \
     "Installing OpenAI SDK"

@@ -6,6 +6,16 @@ source "${SCRIPT_DIR}/utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+# Create framed header with script details and tools list
+create_framed_header "$0" "Installs and configures restart tools" No specific tools identified in script
+
+
+# Create framed header with script details and tools list
+
+
+# Create framed header with script details and tools list
+
+
 save_open_files() {
     # Save any open files in common editors if they're running
     local -a editors=(
@@ -36,10 +46,14 @@ save_open_files() {
 }
 
 restart_system() {
-    print_in_purple "\n >> System restart\n\n"
+    print_in_purple "
+ >> System restart
+
+"
 
     ask_for_confirmation "Are you sure you want to restart the system?"
-    printf "\n"
+    printf "
+"
 
     if answer_is_yes; then
         # Save any open files

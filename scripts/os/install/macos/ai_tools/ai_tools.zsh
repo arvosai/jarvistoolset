@@ -4,10 +4,12 @@
 SCRIPT_DIR=${0:a:h}
 source "${SCRIPT_DIR}/utils.zsh"
 
-print_in_purple "\n   AI Development Tools\n\n"
+print_in_purple "
+   AI Development Tools
+
+"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 # OpenAI Tools
 pip_install "OpenAI Python SDK" "openai"
 

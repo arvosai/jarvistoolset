@@ -4,10 +4,12 @@
 SCRIPT_DIR=${0:a:h}
 source "${SCRIPT_DIR}/utils.zsh"
 
-print_in_purple "\n   Installing Generative AI Productivity Tools\n\n"
+print_in_purple "
+   Installing Generative AI Productivity Tools
+
+"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 # 1. ChatGPT Desktop App
 brew_install "ChatGPT" "chatgpt" "cask"
 
@@ -56,4 +58,6 @@ else
     print_error "pip3 is not installed, skipping OpenAI Whisper CLI"
 fi
 
-print_in_green "\n   Generative AI Productivity Tools installation complete!\n"
+print_in_green "
+   Generative AI Productivity Tools installation complete!
+"

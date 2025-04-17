@@ -3,10 +3,9 @@
 # Get the directory of the current script
 SCRIPT_DIR=${0:a:h}
 source "${SCRIPT_DIR}/../../../utils.zsh"
+source "${SCRIPT_DIR}/../utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-print_in_purple "\n   C/C++ Development Tools\n\n"
 
 # Install C/C++ compilers and tools
 brew_install "GCC" "gcc"
@@ -27,9 +26,6 @@ if command -v lldb &> /dev/null; then
 else
     brew_install "LLDB" "lldb"
 fi
-
-# Valgrind is Linux-only, so we'll skip it on macOS
-print_info "Skipping Valgrind (Linux-only tool)"
 
 brew_install "Doxygen" "doxygen"
 brew_install "Cppcheck" "cppcheck"

@@ -6,12 +6,13 @@ source "${SCRIPT_DIR}/../../utils.zsh"
 source "${SCRIPT_DIR}/utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-print_in_purple "\n   Browsers\n"
+print_in_purple "
+   Browsers
+"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-printf "\n"
+printf "
+"
 
 # Modern Browsers
 brew install --cask google-chrome

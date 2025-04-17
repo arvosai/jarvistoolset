@@ -4,10 +4,12 @@
 SCRIPT_DIR=${0:a:h} \
     source "../../utils.zsh"
 
-print_in_purple "\n   Grok AI Tools\n\n"
+print_in_purple "
+   Grok AI Tools
+
+"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 # Core Grok
 execute "pip3 install grok-sdk" \
     "Installing Grok SDK"

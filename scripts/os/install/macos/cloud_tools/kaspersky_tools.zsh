@@ -4,10 +4,12 @@
 SCRIPT_DIR=${0:a:h} \
     source "../../utils.zsh"
 
-print_in_purple "\n   Kaspersky Security Tools\n\n"
+print_in_purple "
+   Kaspersky Security Tools
+
+"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 # Core Security Solutions
 brew_install "kaspersky-endpoint-security" "Installing Kaspersky Endpoint Security" true
 

@@ -6,8 +6,10 @@ source "${SCRIPT_DIR}/../../utils.zsh"
 source "${SCRIPT_DIR}/utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+print_in_purple "
+   AI Tools and Models Bookmarks
 
-print_in_purple "\n   AI Tools and Models Bookmarks\n\n"
+"
 
 # Function to create bookmarks file for Brave
 create_brave_bookmarks() {
@@ -353,7 +355,10 @@ create_chrome_bookmarks() {
 main() {
     # Check if Brave or Chrome is installed
     if [ -d "$HOME/Library/Application Support/BraveSoftware/Brave-Browser" ]; then
-        print_in_purple "\n   Adding AI Tools bookmarks to Brave\n\n"
+        print_in_purple "
+   Adding AI Tools bookmarks to Brave
+
+"
         create_brave_bookmarks
     else
         print_warning "Brave browser not found. Skipping Brave bookmarks."
@@ -361,13 +366,18 @@ main() {
     
     # Uncomment to also add bookmarks to Chrome
     # if [ -d "$HOME/Library/Application Support/Google/Chrome" ]; then
-    #     print_in_purple "\n   Adding AI Tools bookmarks to Chrome\n\n"
+    #     print_in_purple "
+   Adding AI Tools bookmarks to Chrome
+
+"
     #     create_chrome_bookmarks
     # else
     #     print_warning "Google Chrome not found. Skipping Chrome bookmarks."
     # fi
     
-    print_in_green "\n  AI Tools bookmarks setup complete!\n"
+    print_in_green "
+  AI Tools bookmarks setup complete!
+"
 }
 
 # Run the main function

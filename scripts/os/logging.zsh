@@ -8,6 +8,16 @@ source "${SCRIPT_DIR}/utils.zsh" >/dev/null 2>&1 || true
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+# Create framed header with script details and tools list
+create_framed_header "$0" "Installs and configures logging tools" No specific tools identified in script
+
+
+# Create framed header with script details and tools list
+
+
+# Create framed header with script details and tools list
+
+
 # Global variables
 LOGS_DIR="$HOME/.jarvistoolset/logs"
 CURRENT_LOG_FILE=""
@@ -117,7 +127,8 @@ execute_with_log() {
     
     # Only show the command being executed if print_in_yellow exists
     if type print_in_yellow &>/dev/null; then
-        print_in_yellow "   $msg...\n"
+        print_in_yellow "   $msg...
+"
     fi
     
     # Execute command and log it
@@ -129,7 +140,7 @@ execute_with_log() {
         print_result $exit_code "$msg"
     elif [ $exit_code -ne 0 ]; then
         # Only show errors if print_result doesn't exist
-        echo -e "\033[31m✗ $msg\033[0m"
+        echo -e "[31m✗ $msg[0m"
     fi
     
     return $exit_code
@@ -168,8 +179,13 @@ finalize_logging() {
             echo "========================================================"
         } >> "$CURRENT_LOG_FILE"
         
-        print_in_purple "\n >> Logging finalized\n\n"
-        print_in_yellow "   Log file: $CURRENT_LOG_FILE\n\n"
+        print_in_purple "
+ >> Logging finalized
+
+"
+        print_in_yellow "   Log file: $CURRENT_LOG_FILE
+
+"
     fi
 }
 

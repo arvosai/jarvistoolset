@@ -4,10 +4,12 @@
 SCRIPT_DIR=${0:a:h} \
     source "../../utils.zsh"
 
-print_in_purple "\n   DeepSeek AI Tools\n\n"
+print_in_purple "
+   DeepSeek AI Tools
+
+"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 # Core DeepSeek
 execute "pip3 install deepseek-sdk" \
     "Installing DeepSeek SDK"

@@ -3,14 +3,15 @@
 # Get the directory of the current script
 SCRIPT_DIR=${0:a:h}
 source "${SCRIPT_DIR}/../../../utils.zsh"
+source "${SCRIPT_DIR}/../utils.zsh"
 
 
 # Add trap to handle broken pipe errors
 trap '' PIPE
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-print_in_purple "\n   Python Development Tools\n\n"
+# Create a banner for this installation script
+create_install_banner "$0"
 
 # Install Python via Homebrew
 brew_install "Python" "python"
@@ -60,7 +61,10 @@ EOL
 }
 
 # Install Python versions
-print_in_purple "\n   Installing Python Versions\n\n"
+print_in_purple "
+   Installing Python Versions
+
+"
 
 # Install Python 3.11 with specific patch version
 pyenv_install "3.11.8" "false"
@@ -86,7 +90,10 @@ brew_install "pipx" "pipx"
 run_command "pipx ensurepath" "pipx path setup"
 
 # Install global development tools
-print_in_purple "\n   Installing Development Tools\n\n"
+print_in_purple "
+   Installing Development Tools
+
+"
 
 # Package Management
 pipx_install "pip-tools" "pip-tools"
@@ -133,4 +140,6 @@ pipx_install "Scrapy" "scrapy"
 # Create modular configuration
 create_python_config
 
-print_in_green "\n  Python development environment setup complete!\n"
+print_in_green "
+  Python development environment setup complete!
+"

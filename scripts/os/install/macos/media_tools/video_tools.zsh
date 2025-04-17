@@ -6,7 +6,9 @@ SCRIPT_DIR=${0:a:h} \
     source "./utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+print_in_purple "
+   Video Tools
 
-print_in_purple "\n   Video Tools\n\n"
+"
 
 brew_install "FFmpeg" "ffmpeg"

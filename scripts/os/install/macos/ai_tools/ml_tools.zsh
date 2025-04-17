@@ -4,10 +4,12 @@
 SCRIPT_DIR=${0:a:h} \
     source "../../utils.zsh"
 
-print_in_purple "\n   Machine Learning Development Tools\n\n"
+print_in_purple "
+   Machine Learning Development Tools
+
+"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 # Core ML Libraries
 execute "pip3 install numpy" \
     "Installing NumPy"

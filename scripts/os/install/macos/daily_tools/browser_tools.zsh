@@ -4,10 +4,12 @@
 SCRIPT_DIR=${0:a:h} \
     source "../../utils.zsh"
 
-print_in_purple "\n   Browser Extensions and Tools\n\n"
+print_in_purple "
+   Browser Extensions and Tools
+
+"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 # Install Brave Browser
 execute "brew install --cask brave-browser" \
     "Installing Brave Browser"

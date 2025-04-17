@@ -6,6 +6,16 @@ source "${SCRIPT_DIR}/../../utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+# Create framed header with script details and tools list
+create_framed_header "$0" "Installs and configures finder tools" No specific tools identified in script
+
+
+# Create framed header with script details and tools list
+
+
+# Create framed header with script details and tools list
+
+
 # Minimum supported macOS version for this script
 MINIMUM_MACOS_VERSION="14.0.0"  # macOS Sonoma
 
@@ -15,7 +25,8 @@ check_macos_compatibility() {
     
     if ! is_supported_version "$current_version" "$MINIMUM_MACOS_VERSION"; then
         print_error "Your macOS version ($current_version) is not supported for Finder preferences"
-        print_in_yellow "Please upgrade to macOS Sonoma ($MINIMUM_MACOS_VERSION) or later.\n"
+        print_in_yellow "Please upgrade to macOS Sonoma ($MINIMUM_MACOS_VERSION) or later.
+"
         return 1
     fi
     
@@ -30,7 +41,10 @@ fi
 # Get macOS major version for version-specific settings
 MACOS_MAJOR_VERSION=$(sw_vers -productVersion | cut -d. -f1)
 
-print_in_purple "\n   Finder\n\n"
+print_in_purple "
+   Finder
+
+"
 
 # Finder Window Settings
 execute "defaults write com.apple.finder ShowStatusBar -bool true" \
@@ -118,7 +132,8 @@ execute "defaults write com.apple.finder _FXSortFoldersFirst -bool true" \
 if [[ $MACOS_MAJOR_VERSION -ge 14 ]]; then
     execute "defaults write com.apple.finder FXRemoveOldTrashItems -bool true" \
         "Remove items from Trash after 30 days"
-    print_in_yellow "Note: Trash auto-removal settings may also be controlled via System Settings in Sonoma\n"
+    print_in_yellow "Note: Trash auto-removal settings may also be controlled via System Settings in Sonoma
+"
 else
     execute "defaults write com.apple.finder FXRemoveOldTrashItems -bool true" \
         "Remove items from Trash after 30 days"
@@ -146,7 +161,8 @@ execute "defaults write com.apple.finder QLEnableTextSelection -bool true" \
 
 # iCloud Drive settings may have changed in newer macOS versions
 if [[ $MACOS_MAJOR_VERSION -ge 14 ]]; then
-    print_in_yellow "Note: iCloud Drive settings may need to be configured via System Settings in Sonoma\n"
+    print_in_yellow "Note: iCloud Drive settings may need to be configured via System Settings in Sonoma
+"
     execute "defaults write com.apple.finder FXEnableRemoveFromICloudDriveWarning -bool false" \
         "Disable warning when removing from iCloud Drive"
 else
@@ -160,7 +176,8 @@ fi
 
 # Sidebar Settings - these may have changed in newer macOS versions
 if [[ $MACOS_MAJOR_VERSION -ge 14 ]]; then
-    print_in_yellow "Note: Some sidebar settings may need to be configured via System Settings in Sonoma\n"
+    print_in_yellow "Note: Some sidebar settings may need to be configured via System Settings in Sonoma
+"
     execute "defaults write com.apple.finder SidebarDevicesSectionDisclosedState -bool true" \
         "Expand Devices section in sidebar"
     execute "defaults write com.apple.finder SidebarPlacesSectionDisclosedState -bool true" \

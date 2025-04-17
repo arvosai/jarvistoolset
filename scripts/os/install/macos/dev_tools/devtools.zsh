@@ -6,13 +6,16 @@ source "${SCRIPT_DIR}/../../utils.zsh"
 source "${SCRIPT_DIR}/utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 # Add warning function if not already defined
 print_warning() {
-    print_in_yellow "  [!] $1\n"
+    print_in_yellow "  [!] $1
+"
 }
 
-print_in_purple "\n   Development Tools\n\n"
+print_in_purple "
+   Development Tools
+
+"
 
 # IDEs and Editors
 if brew list --cask | grep -q "visual-studio-code"; then
@@ -211,6 +214,10 @@ else
     print_result $? "yq"
 fi
 
-print_in_green "\n  Development tools setup complete!\n"
+print_in_green "
+  Development tools setup complete!
+"
 
-print_in_yellow "\n  Restart your shell to apply all changes.\n"
+print_in_yellow "
+  Restart your shell to apply all changes.
+"

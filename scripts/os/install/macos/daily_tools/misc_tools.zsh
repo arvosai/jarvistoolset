@@ -6,8 +6,10 @@ source "${SCRIPT_DIR}/../../utils.zsh"
 source "${SCRIPT_DIR}/utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+print_in_purple "
+   Misc Tools
 
-print_in_purple "\n   Misc Tools\n\n"
+"
 
 #brew_install "ShellCheck" "shellcheck"
 #brew_install "Google Drive File Stream" "google-drive-file-stream" "caskroom/cask" "cask"

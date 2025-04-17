@@ -5,8 +5,10 @@ SCRIPT_DIR=${0:a:h}
 source "${SCRIPT_DIR}/../../utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+print_in_purple "
+   Applications
 
-print_in_purple "\n   Applications\n\n"
+"
 
 # Productivity
 brew_install "1Password" "1password" "--cask"

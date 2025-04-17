@@ -4,10 +4,12 @@
 SCRIPT_DIR=${0:a:h}
 source "${SCRIPT_DIR}/utils.zsh"
 
-print_in_purple "\n   Azure AI Tools\n\n"
+print_in_purple "
+   Azure AI Tools
+
+"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 # Core Azure AI
 execute "pip3 install azure-ai-ml" \
     "Installing Azure AI ML"

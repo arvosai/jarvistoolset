@@ -6,8 +6,10 @@ source "${SCRIPT_DIR}/../../utils.zsh"
 source "${SCRIPT_DIR}/utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+print_in_purple "
+ >> Installing Visual Studio Code
 
-print_in_purple "\n >> Installing Visual Studio Code\n\n"
+"
 
 # Install Visual Studio Code
 if brew_install "Visual Studio Code" "visual-studio-code" "--cask"; then
@@ -24,4 +26,7 @@ if brew_install "Visual Studio Code" "visual-studio-code" "--cask"; then
     execute "code --install-extension codeium.codeium" "Installing Codeium extension"
 fi
 
-print_in_purple "\n >> Visual Studio Code installation completed\n\n"
+print_in_purple "
+ >> Visual Studio Code installation completed
+
+"

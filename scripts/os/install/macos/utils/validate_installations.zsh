@@ -7,8 +7,10 @@ source "${SCRIPT_DIR}/utils.zsh"
 source "${SCRIPT_DIR}/../../logging.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+print_in_purple "
+ >> Validating Tool Installations
 
-print_in_purple "\n >> Validating Tool Installations\n\n"
+"
 log_info "Starting validation of installed tools"
 
 # Function to check if a command exists
@@ -90,7 +92,10 @@ check_npm_package() {
 
 # Validate System Setup tools
 validate_system_setup() {
-    print_in_purple "\n   Validating System Setup Tools\n\n"
+    print_in_purple "
+   Validating System Setup Tools
+
+"
     log_info "Validating System Setup Tools"
     
     # Check Homebrew
@@ -117,7 +122,10 @@ validate_system_setup() {
 
 # Validate Development Languages
 validate_dev_langs() {
-    print_in_purple "\n   Validating Development Languages\n\n"
+    print_in_purple "
+   Validating Development Languages
+
+"
     log_info "Validating Development Languages"
     
     # Check Python
@@ -156,7 +164,10 @@ validate_dev_langs() {
 
 # Validate AI and ML Tools
 validate_ai_ml() {
-    print_in_purple "\n   Validating AI and ML Tools\n\n"
+    print_in_purple "
+   Validating AI and ML Tools
+
+"
     log_info "Validating AI and ML Tools"
     
     # Check TensorFlow
@@ -180,7 +191,10 @@ validate_ai_ml() {
 
 # Validate Development Tools
 validate_dev_tools() {
-    print_in_purple "\n   Validating Development Tools\n\n"
+    print_in_purple "
+   Validating Development Tools
+
+"
     log_info "Validating Development Tools"
     
     # Check Git
@@ -225,7 +239,10 @@ validate_dev_tools() {
 
 # Validate Productivity Tools
 validate_productivity() {
-    print_in_purple "\n   Validating Productivity Tools\n\n"
+    print_in_purple "
+   Validating Productivity Tools
+
+"
     log_info "Validating Productivity Tools"
     
     # Check Alfred
@@ -276,7 +293,10 @@ validate_productivity() {
 
 # Validate Communication Tools
 validate_communication() {
-    print_in_purple "\n   Validating Communication Tools\n\n"
+    print_in_purple "
+   Validating Communication Tools
+
+"
     log_info "Validating Communication Tools"
     
     # Check Slack
@@ -318,7 +338,10 @@ validate_communication() {
 
 # Validate Browsers
 validate_browsers() {
-    print_in_purple "\n   Validating Browsers\n\n"
+    print_in_purple "
+   Validating Browsers
+
+"
     log_info "Validating Browsers"
     
     # Check Google Chrome
@@ -351,7 +374,10 @@ validate_browsers() {
 
 # Validate Media Tools
 validate_media() {
-    print_in_purple "\n   Validating Media Tools\n\n"
+    print_in_purple "
+   Validating Media Tools
+
+"
     log_info "Validating Media Tools"
     
     # Check VLC
@@ -390,7 +416,10 @@ validate_media() {
 
 # Validate Utilities
 validate_utilities() {
-    print_in_purple "\n   Validating Utilities\n\n"
+    print_in_purple "
+   Validating Utilities
+
+"
     log_info "Validating Utilities"
     
     # Check The Unarchiver
@@ -469,7 +498,10 @@ main() {
         validate_utilities
     fi
     
-    print_in_purple "\n >> Validation completed\n\n"
+    print_in_purple "
+ >> Validation completed
+
+"
     log_info "Validation completed"
 }
 

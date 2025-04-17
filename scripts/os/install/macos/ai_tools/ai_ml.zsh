@@ -6,8 +6,10 @@ source "${SCRIPT_DIR}/../../utils.zsh"
 source "${SCRIPT_DIR}/utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+print_in_purple "
+ >> Installing AI and ML Tools
 
-print_in_purple "\n >> Installing AI and ML Tools\n\n"
+"
 
 # Install TensorFlow
 if brew_install "tensorflow" "tensorflow"; then
@@ -39,4 +41,7 @@ if pip_install "matplotlib" "Installing matplotlib"; then
     print_success "matplotlib installed"
 fi
 
-print_in_purple "\n >> AI and ML Tools installation completed\n\n"
+print_in_purple "
+ >> AI and ML Tools installation completed
+
+"

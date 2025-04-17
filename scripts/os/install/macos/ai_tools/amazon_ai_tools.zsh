@@ -4,10 +4,12 @@
 SCRIPT_DIR=${0:a:h}
 source "${SCRIPT_DIR}/utils.zsh"
 
-print_in_purple "\n   Amazon AI Tools\n\n"
+print_in_purple "
+   Amazon AI Tools
+
+"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 # Amazon Bedrock
 execute "pip3 install boto3" \
     "Installing AWS SDK"

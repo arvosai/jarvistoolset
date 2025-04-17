@@ -11,6 +11,20 @@ typeset -r NVM_GIT_REPO_URL="https://github.com/nvm-sh/nvm.git"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+# Create framed header with script details and tools list
+create_framed_header "$0" "Installs and configures nvm tools" No specific tools identified in script
+
+
+# Create framed header with script details and tools list
+
+
+# Create framed header with script details and tools list
+
+
+# Create a banner for this installation script
+create_install_banner "$0"
+
+
 add_nvm_configs() {
     typeset -r CONFIGS="
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -65,7 +79,10 @@ update_nvm() {
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 main() {
-    print_in_purple "\n   nvm\n\n"
+    print_in_purple "
+   nvm
+
+"
 
     install_nvm
     add_nvm_configs

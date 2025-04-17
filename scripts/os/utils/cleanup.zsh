@@ -6,7 +6,24 @@ source "${SCRIPT_DIR}/../utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-print_in_purple "\n • Cleanup\n\n"
+# Create framed header with script details and tools list
+create_framed_header "$0" "Utility scripts for cleanup" No specific tools identified in script
+
+
+# Create framed header with script details and tools list
+
+
+# Create framed header with script details and tools list
+
+
+# Create a banner for this installation script
+create_install_banner "$0"
+
+
+print_in_purple "
+ • Cleanup
+
+"
 
 # Remove .DS_Store files
 find "$HOME" -name ".DS_Store" -depth -type f -delete 2>/dev/null

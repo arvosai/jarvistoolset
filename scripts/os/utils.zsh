@@ -347,7 +347,7 @@ print_in_purple() {
 }
 
 print_in_red() {
-    print_in_color "$1 (See logs for details)" 1
+    print_in_color "$1" 1
     # Log error message if log_error is available
     if type log_error &>/dev/null; then
         log_error "${1//\n/}"
@@ -371,7 +371,7 @@ print_question() {
 }
 
 print_error() {
-    print_in_red "   [✗] $1 $2\n"
+    print_in_red "   [✗] $1 - See logs for details.\n"
     # Log error if log_error is available
     if type log_error &>/dev/null; then
         log_error "$1 $2"

@@ -4,10 +4,12 @@
 SCRIPT_DIR=${0:a:h} \
     source "../../utils.zsh"
 
-print_in_purple "\n   Backend Development Tools\n\n"
+print_in_purple "
+   Backend Development Tools
+
+"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 # Programming Languages
 execute "brew install python" \
     "Installing Python"

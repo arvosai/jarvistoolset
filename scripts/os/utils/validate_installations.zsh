@@ -6,7 +6,24 @@ source "${SCRIPT_DIR}/../utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-print_in_purple "\n • Validating Installations\n\n"
+# Create framed header with script details and tools list
+create_framed_header "$0" "Utility scripts for validate_installations" No specific tools identified in script
+
+
+# Create framed header with script details and tools list
+
+
+# Create framed header with script details and tools list
+
+
+# Create a banner for this installation script
+create_install_banner "$0"
+
+
+print_in_purple "
+ • Validating Installations
+
+"
 
 # Function to check if a command is available
 check_command() {
@@ -36,7 +53,9 @@ check_app() {
 }
 
 # Validate system tools
-print_in_purple "\n   System Tools\n"
+print_in_purple "
+   System Tools
+"
 check_command "brew" "Homebrew"
 check_command "git"
 check_command "curl"
@@ -44,7 +63,9 @@ check_command "wget"
 check_command "vim"
 
 # Validate shell setup
-print_in_purple "\n   Shell Setup\n"
+print_in_purple "
+   Shell Setup
+"
 if [ -d "$HOME/.oh-my-zsh" ]; then
     print_success "Oh My Zsh is installed"
 else
@@ -53,7 +74,9 @@ fi
 
 # Validate development tools
 if [[ "${SELECTED_GROUPS[dev_tools]}" == "true" ]]; then
-    print_in_purple "\n   Development Tools\n"
+    print_in_purple "
+   Development Tools
+"
     check_command "node" "Node.js"
     check_command "npm"
     check_command "python3" "Python"
@@ -64,7 +87,9 @@ fi
 
 # Validate creative tools
 if [[ "${SELECTED_GROUPS[creative_tools]}" == "true" ]]; then
-    print_in_purple "\n   Creative Tools\n"
+    print_in_purple "
+   Creative Tools
+"
     check_app "Figma"
     check_app "Blender"
     check_app "Sketch"
@@ -72,14 +97,18 @@ fi
 
 # Validate web tools
 if [[ "${SELECTED_GROUPS[web_tools]}" == "true" ]]; then
-    print_in_purple "\n   Web Tools\n"
+    print_in_purple "
+   Web Tools
+"
     check_command "firebase" "Firebase CLI"
     check_command "netlify" "Netlify CLI"
 fi
 
 # Validate cloud tools
 if [[ "${SELECTED_GROUPS[cloud_tools]}" == "true" ]]; then
-    print_in_purple "\n   Cloud Tools\n"
+    print_in_purple "
+   Cloud Tools
+"
     check_command "aws" "AWS CLI"
     check_command "gcloud" "Google Cloud SDK"
     check_command "az" "Azure CLI"
@@ -87,7 +116,9 @@ fi
 
 # Validate AI tools
 if [[ "${SELECTED_GROUPS[ai_tools]}" == "true" ]]; then
-    print_in_purple "\n   AI Tools\n"
+    print_in_purple "
+   AI Tools
+"
     check_command "jupyter" "Jupyter"
     check_command "conda" "Anaconda"
 fi

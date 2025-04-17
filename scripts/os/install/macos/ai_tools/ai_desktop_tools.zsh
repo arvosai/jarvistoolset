@@ -4,12 +4,17 @@
 SCRIPT_DIR=${0:a:h}
 source "${SCRIPT_DIR}/utils.zsh"
 
-print_in_purple "\n   AI Desktop Applications and Tools\n\n"
+print_in_purple "
+   AI Desktop Applications and Tools
+
+"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 # Local LLM Platforms
-print_in_purple "\n   Local LLM Platforms\n\n"
+print_in_purple "
+   Local LLM Platforms
+
+"
 
 # Ollama - Run LLMs locally
 brew_cask_install "ollama" "Installing Ollama" false
@@ -24,7 +29,10 @@ brew_cask_install "notesollama" "Installing NotesOllama" true
 brew_cask_install "lm-studio" "Installing LM Studio" true
 
 # AI Chat Clients
-print_in_purple "\n   AI Chat Clients\n\n"
+print_in_purple "
+   AI Chat Clients
+
+"
 
 # ChatGPT - Official OpenAI desktop client
 brew_cask_install "chatgpt" "Installing ChatGPT Desktop" true
@@ -61,7 +69,10 @@ brew_cask_install "topaz-sharpen-ai" "Installing Topaz Sharpen AI" true
 brew_cask_install "topaz-denoise-ai" "Installing Topaz Denoise AI" true
 
 # AI Video Tools
-print_in_purple "\n   AI Video Tools\n\n"
+print_in_purple "
+   AI Video Tools
+
+"
 
 # Runway - AI video editing
 brew_cask_install "runway" "Installing Runway" true
@@ -71,7 +82,10 @@ brew_cask_install "d-id" "Installing D-ID Studio" true
 brew_cask_install "synthesia" "Installing Synthesia" true
 
 # AI Writing and Productivity
-print_in_purple "\n   AI Writing and Productivity\n\n"
+print_in_purple "
+   AI Writing and Productivity
+
+"
 
 # Notion - Note-taking with AI features
 brew_cask_install "notion" "Installing Notion" true
@@ -86,7 +100,10 @@ brew_cask_install "raindropio" "Installing Raindrop.io" true
 brew_cask_install "prowritingaid" "Installing ProWritingAid" true
 
 # AI Development Environments
-print_in_purple "\n   AI Development Environments\n\n"
+print_in_purple "
+   AI Development Environments
+
+"
 
 # Visual Studio Code - Code editor with AI extensions
 brew_cask_install "visual-studio-code" "Installing VS Code" true
@@ -110,7 +127,10 @@ brew_cask_install "pycharm-ce-with-anaconda-plugin" "Installing PyCharm CE with 
 brew_cask_install "jetbrains-toolbox" "Installing JetBrains Toolbox" true
 
 # AI Research Tools
-print_in_purple "\n   AI Research Tools\n\n"
+print_in_purple "
+   AI Research Tools
+
+"
 
 # Zotero - Research paper management
 brew_cask_install "zotero" "Installing Zotero" true
@@ -119,13 +139,19 @@ brew_cask_install "zotero" "Installing Zotero" true
 brew_cask_install "mendeley-reference-manager" "Installing Mendeley" true
 
 # AI for Generative Art
-print_in_purple "\n   AI Generative Art Tools\n\n"
+print_in_purple "
+   AI Generative Art Tools
+
+"
 
 # ChaiNNer - Visual AI image processing
 brew_cask_install "chainner" "Installing ChaiNNer" true
 
 # AI Utilities
-print_in_purple "\n   AI Utilities\n\n"
+print_in_purple "
+   AI Utilities
+
+"
 
 # Geekbench AI - AI benchmark
 brew_cask_install "geekbench-ai" "Installing Geekbench AI" true
@@ -140,7 +166,10 @@ brew_cask_install "boltai" "Installing BoltAI" true
 brew_cask_install "backyard-ai" "Installing BackyardAI" true
 
 # Print a message about other tools that need to be installed manually
-print_in_purple "\n   Additional AI Tools (Manual Installation)\n\n"
+print_in_purple "
+   Additional AI Tools (Manual Installation)
+
+"
 
 echo "Some AI tools need to be installed manually from their websites:"
 echo "1. ElevenLabs - https://elevenlabs.io/download"
@@ -159,4 +188,6 @@ echo "13. Replicate - Use the web version at https://replicate.com"
 echo "14. Hugging Face Spaces - Use the web version at https://huggingface.co/spaces"
 echo "15. RunwayML - Use the web version at https://runwayml.com"
 
-print_in_green "\n  AI Desktop Tools installation complete!\n"
+print_in_green "
+  AI Desktop Tools installation complete!
+"

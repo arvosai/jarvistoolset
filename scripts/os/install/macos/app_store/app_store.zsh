@@ -5,8 +5,10 @@ SCRIPT_DIR=${0:a:h}
 source "${SCRIPT_DIR}/../../utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+print_in_purple "
+   Mac App Store
 
-print_in_purple "\n   Mac App Store\n\n"
+"
 
 # Check if mas-cli is installed (required for Mac App Store automation)
 if ! cmd_exists "mas"; then
@@ -86,4 +88,7 @@ execute "mas install 775737590" \
 execute "mas upgrade" \
     "Upgrade all Mac App Store apps"
 
-print_in_purple "\n   Finished Mac App Store installations\n\n"
+print_in_purple "
+   Finished Mac App Store installations
+
+"

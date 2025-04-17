@@ -6,16 +6,26 @@ SCRIPT_DIR=${0:a:h} \
     source "./utils.zsh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+print_in_purple "
+   Installing fonts
 
-print_in_purple "\n   Installing fonts\n\n"
+"
 
-print_in_yellow "\n   Installing .TTF fonts\n"
+print_in_yellow "
+   Installing .TTF fonts
+"
 cp -R "$SCRIPT_DIR/fonts/*.ttf" /Library/Fonts
 
-print_in_yellow "\n   Installing .OTF fonts\n"
+print_in_yellow "
+   Installing .OTF fonts
+"
 cp -R "$SCRIPT_DIR/fonts/*.otf" /Library/Fonts
 
-print_in_yellow "\n   Installing .WOFF fonts\n"
+print_in_yellow "
+   Installing .WOFF fonts
+"
 cp -R "$SCRIPT_DIR/fonts/*.woff" /Library/Fonts
 
-print_in_green "\n   Fonts installation complete!\n"
+print_in_green "
+   Fonts installation complete!
+"
